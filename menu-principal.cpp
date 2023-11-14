@@ -1,5 +1,7 @@
 #include <iostream>
 #include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 
 using namespace std;
 
@@ -38,7 +40,7 @@ int main()
 
 void menu(int&op)
 {
-    cout<<"----Menu Principal----"<<endl;
+    cout<<"\n----Menu Principal----"<<endl;
     cout<<"1- Gestion de Jugadores"<<endl;
     cout<<"2- Gestion de Barajas"<<endl;
     cout<<"3- Jugar"<<endl;
