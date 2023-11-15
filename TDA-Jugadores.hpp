@@ -14,10 +14,14 @@ typedef FILE *parchivo_jugador;
 void menu_jugadores(int &op);
 void agregar_jugador(parchivo_jugador jugador);
 void cargar_jugador(tjugador &jugador);
+void modificar_datos_jugador(tjugador &jugador);
 void mostrar_jugadores(parchivo_jugador jugador);
 void consultar_jugador(parchivo_jugador jugadores, tcad buscado);
 void modificar_jugador(parchivo_jugador jugadores, tcad buscado);
 void borrar_jugador(parchivo_jugador jugadores, tcad buscado);
+bool existe_jugador(tcad buscado);
+bool validar_cadena(tcad cadena);
+bool validar_jugador(tjugador jugador,int op);
 void menu_gestion_jugadores()
 {
     int op;
@@ -106,7 +110,11 @@ void agregar_jugador(parchivo_jugador jugadores)
     cin >> cantidad;
     while (cantidad>0)
     {
-        cargar_jugador(jugador);
+        do
+        {
+            cargar_jugador(jugador);
+            cout<<validar_jugador(jugador,1);
+        }while(validar_jugador(jugador,1)==false);
         fwrite(&jugador,sizeof(jugador),1,jugadores);
         cantidad--;
     }
@@ -164,6 +172,20 @@ void consultar_jugador(parchivo_jugador jugadores, tcad buscado)
     fclose(jugadores);
 }
 
+void modificar_datos_jugador(tjugador& j)
+{
+    tcad cadena;
+    fgets(cadena,30,stdin);
+    strtok(cadena,"\n"); //Captura los saltos de lineas
+    cout << "Ingrese apellido: ";
+    fgets(j.apellido,30,stdin);
+    fflush(stdin);
+    cout << "Ingrese nombre: ";
+    fgets(j.nombre,30,stdin);
+    fflush(stdin);
+
+}
+
 void modificar_jugador(parchivo_jugador jugadores, tcad buscado)
 {
     tjugador j;
@@ -181,7 +203,11 @@ void modificar_jugador(parchivo_jugador jugadores, tcad buscado)
         }
         if (band==true)
         {
-            cargar_jugador(j);
+            do
+            {
+                modificar_datos_jugador(j);
+            }while(validar_jugador(j,2)==false);
+
             fseek(jugadores,-sizeof(j),1);
             fwrite(&j,sizeof(j),1,jugadores);
         }
@@ -220,3 +246,65 @@ void borrar_jugador(parchivo_jugador jugadores, tcad buscado)
             cout << "ERROR AL ELIMINAR" << endl;
     }
 }
+
+bool existe_jugador(tcad buscado)
+{parchivo_jugador jugadores;
+    tjugador jugador;
+    bool existe=false;
+    jugadores=fopen("archivo_binario/jugadores.txt","rb");
+    if (jugadores!=NULL)
+        while (!feof(jugadores) && existe==false)
+        {
+            fread(&jugador,sizeof(jugador),1,jugadores);
+            if (strcmp(jugador.nickname,buscado)==0)
+            {
+                existe=true;
+            }
+        }
+        fclose(jugadores);
+    return existe;
+}
+
+bool validar_cadena(tcad cadena){
+bool valido=true;
+int i;
+if(strlen(cadena)<3)
+valido = false;
+else{
+    for(i=0; i < strlen(cadena)-1 && valido==true;i++){
+    cadena[i]= tolower(cadena[i]);
+    if(!((cadena[i]>='a' && cadena[i]<='z') || cadena[i]==' '))
+        valido=false;
+    }
+}
+return valido;
+}
+
+bool validar_jugador(tjugador jugador,int op)
+{
+    bool band;
+    if(op==1)
+        if( existe_jugador(jugador.nickname))
+            cout<<"El nickname esta registrado"<<endl;
+        else
+            cout<<"Nickname valido"<<endl;
+
+    if(validar_cadena(jugador.apellido))
+        cout<<"El apellido es valido"<<endl;
+    else
+        cout<<"El apellido esta vacio o no es valido"<<endl;
+
+    if(validar_cadena(jugador.nombre))
+        cout<<"El nombre es valido"<<endl;
+    else
+        cout<<"El nombre esta vacio o no es valido"<<endl;
+
+    if(op==1)
+        band = existe_jugador(jugador.nickname)==false && validar_cadena(jugador.apellido)==true && validar_cadena(jugador.nombre)==true;
+    else
+       band = validar_cadena(jugador.apellido)==true && validar_cadena(jugador.nombre)==true;
+
+
+    return band;
+}
+
