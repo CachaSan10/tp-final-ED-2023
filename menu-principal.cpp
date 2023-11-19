@@ -5,26 +5,38 @@
 
 using namespace std;
 
-#include "TDA-Jugadores.hpp"
+//#include "TDA-Jugadores.hpp"
+#include "baraja.hpp"
+
 
 void menu(int&op);
+
 int main()
 {
+//declaracion de variables para la gestion de la baraja
+parchivo archivo;
+tcola mazo;
+int opbaraja;
+//--------------
     int op;
     do
     {
+        
         menu(op);
         switch(op)
         {
         case 1:
-                menu_gestion_jugadores();
+                //menu_gestion_jugadores();
             break;
         case 2:
-
+                do{
+                menu_gestion_baraja(opbaraja);
+                principal_baraja(opbaraja,archivo,mazo);
+                }while (opbaraja!=4);
+                
             break;
-        case 3:
-
-            break;
+       case 3:
+                        break;
         case 4:
             break;
         case 5:
