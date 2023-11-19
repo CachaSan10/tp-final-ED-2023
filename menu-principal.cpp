@@ -4,8 +4,8 @@
 #include <string.h>
 
 using namespace std;
-
-//#include "TDA-Jugadores.hpp"
+typedef char tcad[30];
+#include "TDA-Jugadores.hpp"
 #include "baraja.hpp"
 
 
@@ -21,19 +21,19 @@ int opbaraja;
     int op;
     do
     {
-        
+
         menu(op);
         switch(op)
         {
         case 1:
-                //menu_gestion_jugadores();
+                menu_gestion_jugadores();
             break;
         case 2:
                 do{
                 menu_gestion_baraja(opbaraja);
                 principal_baraja(opbaraja,archivo,mazo);
                 }while (opbaraja!=4);
-                
+
             break;
        case 3:
                         break;

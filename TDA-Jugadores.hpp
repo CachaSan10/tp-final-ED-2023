@@ -1,4 +1,4 @@
-typedef char tcad[30];
+
 typedef struct tjugador
 {
     tcad apellido;
