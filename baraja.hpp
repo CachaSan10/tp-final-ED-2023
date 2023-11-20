@@ -31,7 +31,7 @@ void menu_gestion_baraja(int &op){
     cout<<"\n----Menu Principal----"<<endl;
     cout<<"1- Generar Baraja"<<endl;//iniciar
     cout<<"2- Crear Mazo"<<endl;//aleatorio
-    cout<<"3- Mostrar Mazo"<<endl;//recuperar del archivo las cartas 
+    cout<<"3- Mostrar Mazo"<<endl;//recuperar del archivo las cartas
     cout<<"4- Salir"<<endl;
     cout<<"Elegir Opcion"<<endl;
     cin>>op;
@@ -43,12 +43,12 @@ void principal_baraja(int op,parchivo archivo,tcola &mazo){
     pmazo nuevo;
     switch (op)
     {
-    case 1: 
+    case 1:
             cout<<"-----------Generar Baraja------------"<<endl;
             iniciar_baraja(inicio_baraja,archivo,mazo);//inicio el archivo y la cola
             if(inicio_baraja==true)
                 cout<<"se inicio correctamente la baraja"<<endl;
-            else 
+            else
                 cout<<"no se pudo iniciar la baraja"<<endl;
         break;
     case 2:
@@ -57,7 +57,7 @@ void principal_baraja(int op,parchivo archivo,tcola &mazo){
               generar_mazo(naipe,archivo,mazo);
                if(cola_vacia(mazo)==false)
                     cout<<"MAZO GENERADO CON EXITO"<<endl;
-                else 
+                else
                     cout<<"ERROR EN LA GENERACION DEL MAZO"<<endl;
             }else
                 cout<<"debe iniciar la baraja opcion 1"<<endl;
@@ -68,6 +68,7 @@ void principal_baraja(int op,parchivo archivo,tcola &mazo){
         break;
     case 4:
             cout<<"finalizacion de generacion de baraja"<<endl;
+            break;
     default:
             cout<<"error de ingreso"<<endl;
         break;
@@ -80,7 +81,7 @@ void iniciar_baraja(bool &band,parchivo archivo,tcola &mazo){
     if(archivo!=NULL && mazo.frente==NULL){
         band=true;
         fclose(archivo);
-    }else 
+    }else
         band=false;
 }
 
@@ -124,7 +125,7 @@ void generar_mazo(tnaipe &naipe,parchivo archivo,tcola &mazo){
     }
      fclose(archivo);
     cargar_cola(archivo,mazo);
-   
+
 }
 
 void generar_naipe(tnaipe &naipe,tlista &aleatorio,tlista &palo){

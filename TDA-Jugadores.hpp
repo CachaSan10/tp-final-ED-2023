@@ -133,7 +133,7 @@ void agregar_jugador(parchivo_jugador jugadores)
 {
     tjugador jugador;
     int cantidad;
-    jugadores=fopen("archivo_binario/jugadores.txt","ab");
+    jugadores=fopen("archivo_binario/jugadores.txt","ab");//AKI
     cout << "Cuántos registros desea guardar: ";
     cin >> cantidad;
     while (cantidad>0)

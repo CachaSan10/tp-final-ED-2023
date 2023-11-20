@@ -1,5 +1,5 @@
 
-#include "tdaCola.hpp"
+//#include "tdaCola.hpp"
 
 typedef struct tpila *ppila;
 
@@ -43,9 +43,11 @@ void agregar_pila(ppila &p,tnaipe valor)
 tnaipe quitar_pila(ppila &p)
 { tnaipe extraido;
     ppila nodo;
-    if (pila_vacia(p)==true)
-        extraido=NULL;
-    else
+    if (pila_vacia(p)==true){
+        extraido.punto=-9999;
+        extraido.valor=-9999;
+        extraido.comodin=false;
+    }else
     { extraido=p->dato;
       nodo=p;
       p=p->sig;
@@ -56,8 +58,11 @@ tnaipe quitar_pila(ppila &p)
 }
 tnaipe tope_pila(ppila p)
 { tnaipe tope;
- if (pila_vacia(p)==true)
- tope=0;
+ if (pila_vacia(p)==true){
+    tope.punto=-9999;
+    tope.valor=-9999;
+    tope.comodin=false;
+ }
  else
  tope=p->dato;
  return tope;

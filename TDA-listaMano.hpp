@@ -3,7 +3,7 @@ el objetivo de esta libreria es almacenar los naipes que se le asignaron al juga
 se toma la estructura de una lista doble
 
 */
-#include "tdaCola.hpp"
+//#include "tdaCola.hpp"
 
 typedef struct tlista_mano *plista_mano;
 typedef struct tlista_mano{
@@ -66,11 +66,12 @@ if (lis.contador==0)
         }
     }
 }
+}
 
 pnodo quitar(tlistadoble &lis,tnaipe naipe)
 { plista_mano i,extraido;
  if (lis.contador==0)
-    aux=NULL;
+    extraido=NULL;
  else
  {
     for(i=lis.inicio;i!=lis.final && i->dato.valor!= naipe.valor;i=i->sig);
@@ -85,14 +86,14 @@ pnodo quitar(tlistadoble &lis,tnaipe naipe)
 }
 
 void mostrar_lista(tlistadoble lis)
-{ pnodo i;
+{ plista_mano i;
  if (lis.contador==0)
- cout << “Lista Vacia” << endl;
+ cout << "Lista Vacia"<< endl;
  else
  { i=lis.inicio;
  while (i->sig!=lis.inicio)
- { cout << i->dato << endl;
+ { cout << i->dato.valor<<"--"<<i->dato.palo << endl;
  i=i->sig; }
- cout << i->dato << endl;
+ cout << i->dato.valor<<"--"<<i->dato.palo << endl;
  }
 }

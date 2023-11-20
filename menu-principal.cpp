@@ -7,7 +7,7 @@ using namespace std;
 typedef char tcad[30];
 #include "TDA-Jugadores.hpp"
 #include "baraja.hpp"
-
+#include "tdaJuego.hpp"
 
 void menu(int&op);
 
@@ -22,7 +22,6 @@ int opbaraja;
     int op;
     do
     {
-
         menu(op);
         switch(op)
         {
