@@ -16,6 +16,7 @@ int main()
 //declaracion de variables para la gestion de la baraja
 parchivo archivo;
 tcola mazo;
+bool mazo_creado;
 int opbaraja;
 //--------------
     int op;
@@ -33,10 +34,15 @@ int opbaraja;
                 menu_gestion_baraja(opbaraja);
                 principal_baraja(opbaraja,archivo,mazo);
                 }while (opbaraja!=4);
+                mazo_creado=true;
 
             break;
        case 3:
-                        break;
+                if(mazo_creado==true){
+                    principal_juego();
+                }else
+                    cout<<"debe iniciar el mazo"<<endl;
+                break;
         case 4:
             break;
         case 5:
