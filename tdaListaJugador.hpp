@@ -29,11 +29,12 @@ bool lista_vacia_j(tlistaJ lis);
 pnodojugador quitar_inicio(tlistaJ &lis);
 
 
-
+// Inicia la lista de jugadores
 void iniciar_lista_jug(tlistaJ &lis){
     lis.inicio=NULL;
     lis.cant=0;
 }
+// Procedimiento que agrega el jugador de la lista
 void agregar_valor(tlistaJ &lis,tjugador a){
     pnodojugador nuevo;
     crear_nodo_jug(nuevo,a);
@@ -46,6 +47,8 @@ void agregar_valor(tlistaJ &lis,tjugador a){
         lis.cant++;
     }
 }
+
+//  Procedimiento que crea el nodo de jugador para agregar a la lista
 void crear_nodo_jug(pnodojugador &nuevo,tjugador dato){
     nuevo=new t_nodojugador;
     if (nuevo!=NULL){
@@ -55,6 +58,10 @@ void crear_nodo_jug(pnodojugador &nuevo,tjugador dato){
         cout<<"sin espacio de memoria"<<endl;
     }
 }
+/**
+Funcion que se encarga de verificar si el jugador existe en la lista para evitar que el mismo se repita
+return true si exite o false si no existe en la lista
+**/
 bool existe_valor(pnodojugador lis,pnodojugador valor){
     pnodojugador i;
     bool encontrado= false;
@@ -66,6 +73,8 @@ bool existe_valor(pnodojugador lis,pnodojugador valor){
     }
     return encontrado;
 }
+
+// Procedimiento que muestra los participantes del juego
 void mostrar_lis_jug(pnodojugador a){
    pnodojugador i;
   if (a!=NULL)
@@ -78,6 +87,7 @@ bool lista_vacia_j(tlistaJ lis){
     return lis.inicio==NULL;
 }
 
+// Funcion que quita el jugador de la lista
 pnodojugador quitar_inicio(tlistaJ &lis){
     pnodojugador extraido;
     extraido=lis.inicio;

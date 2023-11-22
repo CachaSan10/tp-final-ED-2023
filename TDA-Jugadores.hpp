@@ -109,7 +109,6 @@ void cargar_jugador(tjugador &j)
             cout<<"Nombre valido"<<endl;
         else
             cout<<"Nombre vacio o no valido "<<endl;
-            break;
     }while(validar_cadena(j.nombre)==false);
 
      do
@@ -221,7 +220,6 @@ void modificar_datos_jugador(tjugador& j)
             cout<<"Nombre valido"<<endl;
         else
             cout<<"Nombre vacio o no valido "<<endl;
-            break;
     }while(validar_cadena(j.nombre)==false);
 }
 

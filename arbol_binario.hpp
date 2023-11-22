@@ -9,6 +9,7 @@ parbol izq;
 parbol der;
 };
 
+//Inicia el arbol
 void iniciar_arbol(parbol &a){
 a=NULL;
 }
@@ -45,6 +46,9 @@ if (a->dato==buscarMayor)
 }
 }
 
+/**Procedimiento que se encarga de agregar los jugadores con el puntaje al arbol
+el arbol agrega de acuerdo al puntaje que obtuvo el participante en el juego
+*/
 void insercion(parbol &a,parbol nuevo)
 {
 if (a==NULL)
@@ -56,6 +60,7 @@ else
 insercion(a->der,nuevo);
 }
 
+//Lista los valores en orden
 void enorden(parbol a)
 { if (a!=NULL)
 { enorden(a->izq);

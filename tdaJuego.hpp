@@ -25,9 +25,18 @@ int op;
         menu_juego(op);
         switch(op){
         case 1:
+        /**
+        Procedimiento que se encarga de seleccionar los jugadores que se encuentra dentro del archivo binario
+        para luego almacenarlo en una lista.
+        **/
             seleccion_jugador(lista_jugadores);//lista de jugadores elegidos ,archivo jugador
             break;
         case 2:
+        /**
+        Funcion de la libreria tdaListaJugador.hhp que se encarga de verificar si la lista de jugadores esta vacia(true) o no(false).
+        En caso de tener jugadores empieza a distribusion de las cartas a cada jugador.
+        Una vez repartida las cartas cambia es estado de la variable en true para iniciar el juego.
+        **/
             if(lista_vacia_j(lista_jugadores)==false){
                 repartir_cartas(lista_jugadores,mazo);
                 ini_juego=true;
@@ -40,6 +49,11 @@ int op;
             else
                 cout<<"debe repartir las cartas"<<endl;
             break;
+        case 4:
+            cout<<"Fin del menu de Juego"<<endl;
+            break;
+        default:
+            cout<<"Error de opcion"<<endl;
         }
 
     }while(op!=4);
@@ -55,6 +69,7 @@ void menu_juego(int &op){
     cout<<"Elegir Opcion"<<endl;
     cin>>op;
 }
+
 
 void seleccion_jugador(tlistaJ &lista_jugadores){
 
@@ -86,12 +101,13 @@ void seleccion_jugador(tlistaJ &lista_jugadores){
             fgets(consulta,30,stdin);//guardo el dato a comparar
         //consulto si se logo la apertura del archivo
            if (jugadores!=NULL){
-            //mientras que no me encuentre en el final del archivo y existe sea falso repito
+            //mientras que no encuentre en el final del archivo y existe sea falso repito
             while (!feof(jugadores)&& existe==false)
             {
                 fread(&player,sizeof(player),1,jugadores);
                 //comparo el nikmame del recorrido con el buscado
                 if (strcmp(player.nickname,consulta)==0)
+                // Utiliza el procedimiento agregar_Valor de la libreria tdaListaJugador
                 {   agregar_valor(lista_jugadores,player);
                     cout<<"jugador seleccionado"<<endl;
                     existe=true;
@@ -106,6 +122,7 @@ void seleccion_jugador(tlistaJ &lista_jugadores){
     mostrar_lis_jug(lista_jugadores.inicio);
 }
 
+//Procedimiento que se encarga de repartir las cartas a los jugadores
 void repartir_cartas(tlistaJ &lis,tcola &mazo){
     pmazo extraido;
     int aux,cont;
@@ -155,6 +172,11 @@ void iniciar_juego(tlistaJ &lista_jugadores,tcola &mazo){
             if(band==true){//si canbia band indica que en la mano tengo una carta que le gana  a la cima del mazo
                 cout<<"EL JUGADOR OBTIENE LA CARTA"<<endl;
                 cout<<"CARTA QUE GANO LA COMPARACION: "<<endl;
+                /**
+                Se utiliza de la libreria TDA-pilaCartas.hhp agregar_pila
+                Se utiliza de la libreria tdaCola.hhp extraido
+                Se utiliza de la libreria baraja.hhp mostrar_naipe
+                **/
                 mostrar_naipe(naipe_ganador);//muestro el naipe que le gano al frente del mazo
                 extraido=quitar_cola(mazo);//quito el frente del mazo
                 agregar_pila(i->naipes_ganados,extraido->naipe);//agrego el extraido a la pila del jugador
@@ -183,12 +205,15 @@ void iniciar_juego(tlistaJ &lista_jugadores,tcola &mazo){
 
 }
 
-
+/** Procedimiento que se encarga de comparar la lista de cartas que posee el jugador que le corresponde jugar
+con la cima del mazo de carta para saber si el jugador puede o no retirar  la carta de la cima para despues extraerlo
+y agregarlo a la pila de cartas que se va desaciendo el jugador.
+*/
 void comparar_mod(tlistadoble &lista_cartas,pmazo extraido,tnaipe &naipe,bool band){
     plista_mano i;
     //recorro los naipes que tiene en su mano el jugador
     for(i=lista_cartas.inicio;i!=NULL;i=i->sig){
-        //si es comodi le gana a cualquier carta
+        //si es comodin le gana a cualquier carta
         if(i->dato.comodin==true){
             naipe=i->dato;
 
