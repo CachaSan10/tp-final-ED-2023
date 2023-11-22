@@ -16,6 +16,7 @@ typedef struct t_nodojugador{
 
 typedef struct tlistaJ{
     pnodojugador inicio;
+    int cant;
 };
 
 
@@ -24,22 +25,25 @@ void agregar_valor(tlistaJ &lis,tjugador a);
 void crear_nodo_jug(pnodojugador &nuevo,tjugador dato);
 bool existe_valor(tlistaJ lis,tjugador valor);
 void mostrar_lis_jug(pnodojugador a);
-bool lista_vacia(tlistaJ lis);
+bool lista_vacia_j(tlistaJ lis);
 pnodojugador quitar_inicio(tlistaJ &lis);
 
 
 
 void iniciar_lista_jug(tlistaJ &lis){
     lis.inicio=NULL;
+    lis.cant=0;
 }
 void agregar_valor(tlistaJ &lis,tjugador a){
     pnodojugador nuevo;
     crear_nodo_jug(nuevo,a);
     if(lis.inicio==NULL){
         lis.inicio=nuevo;
+        lis.cant++;
     }else{
         nuevo->sig=lis.inicio;
         lis.inicio=nuevo;
+        lis.cant++;
     }
 }
 void crear_nodo_jug(pnodojugador &nuevo,tjugador dato){
@@ -70,7 +74,7 @@ void mostrar_lis_jug(pnodojugador a){
   }else
     cout << "LISTA VACIA";
 }
-bool lista_vacia(tlistaJ lis){
+bool lista_vacia_j(tlistaJ lis){
     return lis.inicio==NULL;
 }
 
@@ -78,6 +82,7 @@ pnodojugador quitar_inicio(tlistaJ &lis){
     pnodojugador extraido;
     extraido=lis.inicio;
     lis.inicio=extraido->sig;
+    lis.cant--;
     return extraido;
 }
 

@@ -38,7 +38,7 @@ int opbaraja;
             break;
        case 3:
                 if(mazo_creado==true){
-                    principal_juego();
+                    principal_juego(mazo);
                 }else
                     cout<<"debe iniciar el mazo"<<endl;
                 break;

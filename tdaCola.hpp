@@ -70,10 +70,10 @@ pmazo final_cola(tcola q){
 
 pmazo quitar_cola(tcola &q){
     pmazo aux;
-    if(cola_vacia(q)==NULL)
+    if(cola_vacia(q)==true)
         aux=NULL;
     else{
-        if(q.frente==q.final){
+        if(q.frente==q.final){//contiene un solo elemento
             aux=q.frente;
             q.frente=NULL;
             q.final=NULL;

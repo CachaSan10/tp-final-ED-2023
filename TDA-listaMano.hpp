@@ -17,21 +17,21 @@ typedef struct tlistadoble{
 int contador;
  };
 
- void iniciar_lista(tlistadoble &lis);
+ void iniciar_lista_m(tlistadoble &lis);
  void crear_nodo(plista_mano &nuevo,tnaipe naipe);
- void agregar(tlistadoble &lis, plista_mano nuevo);
+ void agregar_m(tlistadoble &lis,tnaipe naipe);
  plista_mano quitar_nodo(tlistadoble &lis);
- void mostrar_lista(tlistadoble lis);
-pnodo quitar(tlistadoble &lis,tnaipe naipe);
+ void mostrar_lista_m(tlistadoble lis);
+plista_mano quitar(tlistadoble &lis,tnaipe naipe);
+bool lista_mano_vacia(tlistadoble lis);
 
-
- void iniciar_lista(tlistadoble &lis)
+ void iniciar_lista_m(tlistadoble &lis)
 {
  lis.inicio=NULL;
  lis.final=NULL;
  lis.contador=0;
 }
-void crear_nodo(plista_mano &nuevo,tnaipe naipe){
+void crear_nodo_m(plista_mano &nuevo,tnaipe naipe){
     nuevo=new tlista_mano;
     if (nuevo!=NULL){
         nuevo->dato=naipe;
@@ -39,12 +39,16 @@ void crear_nodo(plista_mano &nuevo,tnaipe naipe){
     }
 }
 
-void agregar(tlistadoble &lis, plista_mano nuevo)
+void agregar_m(tlistadoble &lis,tnaipe naipe)
 {
+plista_mano nuevo;
 plista_mano i;
+crear_nodo_m(nuevo,naipe);
+
 if (lis.contador==0)
  { lis.inicio=nuevo;
    lis.final=nuevo;
+   lis.contador++;
  }
  else
  { if(nuevo->dato.valor<lis.inicio->dato.valor){
@@ -57,18 +61,20 @@ if (lis.contador==0)
             lis.final->sig=nuevo;
             nuevo->ant=lis.final;
             lis.final=nuevo;
+            lis.contador++;
         }else{
             for(i=lis.inicio->sig;i!=lis.final && nuevo->dato.valor > i->dato.valor;i=i->sig);
             nuevo->sig=i;
             nuevo->ant=i->ant;
             (i->ant)->sig=nuevo;
             i->ant=nuevo;
+            lis.contador++;
         }
     }
 }
 }
 
-pnodo quitar(tlistadoble &lis,tnaipe naipe)
+plista_mano quitar(tlistadoble &lis,tnaipe naipe)
 { plista_mano i,extraido;
  if (lis.contador==0)
     extraido=NULL;
@@ -85,15 +91,20 @@ pnodo quitar(tlistadoble &lis,tnaipe naipe)
  }
 }
 
-void mostrar_lista(tlistadoble lis)
+void mostrar_lista_m(tlistadoble lis)
 { plista_mano i;
  if (lis.contador==0)
- cout << "Lista Vacia"<< endl;
+    cout << "Lista Vacia"<< endl;
  else
  { i=lis.inicio;
- while (i->sig!=lis.inicio)
+ while (i->sig!=NULL)
  { cout << i->dato.valor<<"--"<<i->dato.palo << endl;
- i=i->sig; }
+   i=i->sig;
+ }
  cout << i->dato.valor<<"--"<<i->dato.palo << endl;
  }
+}
+
+bool lista_mano_vacia(tlistadoble lis){
+    return lis.contador==0;
 }
