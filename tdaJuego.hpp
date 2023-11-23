@@ -162,7 +162,7 @@ void iniciar_juego(tlistaJ &lista_jugadores,tcola &mazo){
     do{
         band=false;
         cout<<"* JUEGA: "<<i->dato.nickname<<" *"<<endl;
-        cout<<"**************************"<<endl;
+        cout<<"****************"<<endl;
         cout<<"CIMA DE BARAJA"<<endl;
         extraido=frente_cola(mazo);//CONSULTA frente de cola
         aux=frente_cola(mazo);//CONSULTA frente de cola
@@ -227,13 +227,13 @@ void comparar_mod(tlistadoble &lista_cartas,pmazo extraido,tnaipe &naipe,bool &b
            }else{
                 //si es comodin le gana a cualquier carta
                 if(i->dato.comodin==true){
-                cout<<"tiene carta comodin"<<endl;
-                //quito la carta de la mano del cliente
-                aux=quitar_nodo_cartas(lista_cartas,i->dato);
-                //asigno al naipe que se agregara a la pila
-                naipe=aux->dato;
-                //cambio la bandera que verifica si la carta del jugador le gano a la cima del mazo
-                band=true;
+                    cout<<"tiene carta comodin"<<endl;
+                    //quito la carta de la mano del cliente
+                    aux=quitar_nodo_cartas(lista_cartas,i->dato);
+                    //asigno al naipe que se agregara a la pila
+                    naipe=aux->dato;
+                    //cambio la bandera que verifica si la carta del jugador le gano a la cima del mazo
+                    band=true;
                } else
                     band=false;
             }

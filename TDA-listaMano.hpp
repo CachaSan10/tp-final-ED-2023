@@ -36,6 +36,7 @@ void crear_nodo_m(plista_mano &nuevo,tnaipe naipe){
     if (nuevo!=NULL){
         nuevo->dato=naipe;
         nuevo->sig=NULL;
+        nuevo->ant=NULL;
     }
 }
 
@@ -91,7 +92,7 @@ void mostrar_lista_m(tlistadoble lis)
 }
 
 bool lista_mano_vacia(tlistadoble lis){
-    return lis.inicio=NULL;
+    return lis.inicio==NULL;
 }
 plista_mano quitar_nodo_cartas(tlistadoble &lis,tnaipe naipe)
 { plista_mano i,extraido;

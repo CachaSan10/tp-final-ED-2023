@@ -26,6 +26,8 @@ void nodo_mazo(pmazo &nuevo,tnaipe naipe);
 void mostrar_naipe(tnaipe nodo);
 void listar_mazo(parchivo archivo);
 void cargar_cola(parchivo archivo,tcola &q);
+bool existe_naipe(tcola aux,tnaipe naipe);
+bool com_naipe(tnaipe a,tnaipe b);
 
 void menu_gestion_baraja(int &op){
     cout<<"\n----Menu Principal----"<<endl;
@@ -38,6 +40,7 @@ void menu_gestion_baraja(int &op){
 
 }
 void principal_baraja(int op,parchivo archivo,tcola &mazo){
+
     bool inicio_baraja;
     tnaipe naipe;
     pmazo nuevo;
@@ -86,43 +89,75 @@ void iniciar_baraja(bool &band,parchivo archivo,tcola &mazo){
 }
 
 void generar_mazo(tnaipe &naipe,parchivo archivo,tcola &mazo){
+    int i=0;
     pmazo nuevo; //es el nodo de almacenamiento
+    tcola aux;
    //tnaipe naipe;//es el registro con los datos del naipe
    archivo=fopen("BARAJA.SEC","wb+");
    tlista aleatorio1,aleatorio2,aleatorio3,aleatorio4,palo;
-   srand(time(NULL));
-   //
+  // srand(time(NULL));
+   //genera del 1 al 12 en forma aleatorea
    generar_aleatorio(aleatorio1);
-
+   //mostrar(aleatorio1.inicio);
    generar_aleatorio(aleatorio2);
    //
+  // mostrar(aleatorio2.inicio);
    generar_aleatorio(aleatorio3);
    //
+  // mostrar(aleatorio3.inicio);
    generar_aleatorio(aleatorio4);
+
+   //mostrar(aleatorio4.inicio);
+   genero los aleatorios en los palos
    //
    aleatoreo_palo(palo);
    //
-    for(int i=0;i<48;i++){
+    do{//verifica si esa lista no esta vacia
         if(aleatorio1.inicio!=NULL){
+            //
             generar_naipe(naipe,aleatorio1,palo);
-           fwrite(&naipe,sizeof(naipe),1,archivo);
+            //controla que el naipe no exista
+            //controlo con una cola auxiliar
+            if(existe_naipe(aux,naipe)==false){
+                //creo el nodo para agregar en el auxiliar
+                nodo_mazo(nuevo,naipe);
+                //agregoa a auxiliar
+                agregar_cola(aux,nuevo);
+                fwrite(&naipe,sizeof(naipe),1,archivo);
+                i++;
+            }
         }else{
             if(aleatorio2.inicio!=NULL){
-            generar_naipe(naipe,aleatorio2,palo);
-            fwrite(&naipe,sizeof(naipe),1,archivo);
+                generar_naipe(naipe,aleatorio2,palo);
+                if(existe_naipe(aux,naipe)==false){
+                    nodo_mazo(nuevo,naipe);
+                    agregar_cola(aux,nuevo);
+                    fwrite(&naipe,sizeof(naipe),1,archivo);
+                    i++;
+                }
             }else{
                 if(aleatorio3.inicio!=NULL){
                     generar_naipe(naipe,aleatorio3,palo);
-                   fwrite(&naipe,sizeof(naipe),1,archivo);
+                    if(existe_naipe(aux,naipe)==false){
+                        nodo_mazo(nuevo,naipe);
+                        agregar_cola(aux,nuevo);
+                        fwrite(&naipe,sizeof(naipe),1,archivo);
+                        i++;
+                    }
                 }else{
                     if(aleatorio4.inicio!=NULL){
                         generar_naipe(naipe,aleatorio4,palo);
-                        fwrite(&naipe,sizeof(naipe),1,archivo);
-                        }
+                        if(existe_naipe(aux,naipe)==false){
+                            nodo_mazo(nuevo,naipe);
+                            agregar_cola(aux,nuevo);
+                            fwrite(&naipe,sizeof(naipe),1,archivo);
+                            i++;
+                            }
                     }
                 }
+            }
         }
-    }
+    }while(i!=48);
      fclose(archivo);
     cargar_cola(archivo,mazo);
 
@@ -154,7 +189,7 @@ void generar_aleatorio(tlista &lis){
 }
 
 void aleatoreo_palo(tlista &lis){
-    srand(time(NULL));
+   srand(time(NULL));
     iniciar_lista(lis);
     //indicadores de cantidad de cada elemento
     int a=0,b=0,c=0,d=0;
@@ -322,4 +357,23 @@ void cargar_cola(parchivo archivo,tcola &q){
         }
  }
  fclose(archivo);
+}
+
+
+bool existe_naipe(tcola aux,tnaipe naipe){
+    pmazo q;
+    bool band=false;
+    do{
+        q = quitar_cola(aux);
+        if(com_naipe(q->naipe,naipe)==true)
+            band=true;
+    }while(cola_vacia(aux)!=true && band!=true);
+    return band;
+}
+
+bool com_naipe(tnaipe a,tnaipe b){
+    if(a.valor==b.valor)
+        if(strcmp(a.palo,b.palo)==0)
+            return true;
+    return false;
 }

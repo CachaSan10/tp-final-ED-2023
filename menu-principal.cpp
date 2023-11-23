@@ -13,6 +13,7 @@ void menu(int&op);
 
 int main()
 {
+
 //declaracion de variables para la gestion de la baraja
 parchivo archivo;
 tcola mazo;
