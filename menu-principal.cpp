@@ -30,11 +30,13 @@ int opbaraja;
                 menu_gestion_jugadores();
             break;
         case 2:
-                do{
-                menu_gestion_baraja(opbaraja);
-                principal_baraja(opbaraja,archivo,mazo);
-                }while (opbaraja!=4);
-                mazo_creado=true;
+               // do{
+                //menu_gestion_baraja(opbaraja);
+                // Se los agrego al menu_gestion_baraja dentro del principal porque se perdia el bool
+                // de que se inicio la baraja
+                principal_baraja(opbaraja,archivo,mazo,mazo_creado);
+                //}while (opbaraja!=4);
+              //  mazo_creado=true;
 
             break;
        case 3:
@@ -51,8 +53,7 @@ int opbaraja;
         default:
             cout<<"Error de opcion"<<endl;
         }
-    }
-    while(op!=5);
+    }while(op!=5);
     return 0;
 }
 

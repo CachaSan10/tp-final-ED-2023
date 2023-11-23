@@ -11,7 +11,7 @@ using namespace std;
 typedef FILE *parchivo;
 
 void menu_gestion_baraja(int &opbaraja);
-void principal_baraja(int op,parchivo archivo,tcola &mazo);
+void principal_baraja(int op,parchivo archivo,tcola &mazo,bool & mazo_creado);
 void crear_carta(pnodo nuevo,pmazo dato);
 void generar_aleatorio(tlista &lis);
 void iniciar_baraja(bool &band,parchivo archivo,tcola &mazo);
@@ -39,13 +39,16 @@ void menu_gestion_baraja(int &op){
     cin>>op;
 
 }
-void principal_baraja(int op,parchivo archivo,tcola &mazo){
+void principal_baraja(int op,parchivo archivo,tcola &mazo,bool & mazo_creado){
 
     bool inicio_baraja;
     tnaipe naipe;
     pmazo nuevo;
+    do{
+     menu_gestion_baraja(op);
     switch (op)
     {
+
     case 1:
             cout<<"-----------Generar Baraja------------"<<endl;
             iniciar_baraja(inicio_baraja,archivo,mazo);//inicio el archivo y la cola
@@ -58,10 +61,13 @@ void principal_baraja(int op,parchivo archivo,tcola &mazo){
             cout<<"-----------Crear Mazo Aleatorio------------"<<endl;
             if(inicio_baraja==true){
               generar_mazo(naipe,archivo,mazo);
-               if(cola_vacia(mazo)==false)
+               if(cola_vacia(mazo)==false){
                     cout<<"MAZO GENERADO CON EXITO"<<endl;
-                else
+                    mazo_creado=true;
+                }else{
                     cout<<"ERROR EN LA GENERACION DEL MAZO"<<endl;
+                    mazo_creado=false;
+                    }
             }else
                 cout<<"debe iniciar la baraja opcion 1"<<endl;
         break;
@@ -76,6 +82,7 @@ void principal_baraja(int op,parchivo archivo,tcola &mazo){
             cout<<"error de ingreso"<<endl;
         break;
     }
+    }while(op!=4);
 }
 void iniciar_baraja(bool &band,parchivo archivo,tcola &mazo){
     //archivo
@@ -92,37 +99,50 @@ void generar_mazo(tnaipe &naipe,parchivo archivo,tcola &mazo){
     int i=0;
     pmazo nuevo; //es el nodo de almacenamiento
     tcola aux;
+    //falto inicializar la cola aux
+    iniciar_cola(aux);
    //tnaipe naipe;//es el registro con los datos del naipe
    archivo=fopen("BARAJA.SEC","wb+");
    tlista aleatorio1,aleatorio2,aleatorio3,aleatorio4,palo;
+
   // srand(time(NULL));
    //genera del 1 al 12 en forma aleatorea
    generar_aleatorio(aleatorio1);
-   //mostrar(aleatorio1.inicio);
+   mostrar(aleatorio1.inicio);
    generar_aleatorio(aleatorio2);
    //
-  // mostrar(aleatorio2.inicio);
+  mostrar(aleatorio2.inicio);
    generar_aleatorio(aleatorio3);
    //
-  // mostrar(aleatorio3.inicio);
+   mostrar(aleatorio3.inicio);
    generar_aleatorio(aleatorio4);
 
-   //mostrar(aleatorio4.inicio);
-   genero los aleatorios en los palos
+   mostrar(aleatorio4.inicio);
+//   genero los aleatorios en los palos
    //
    aleatoreo_palo(palo);
    //
     do{//verifica si esa lista no esta vacia
+    cout<<"controlar lista aleatorio 1"<<endl;
         if(aleatorio1.inicio!=NULL){
             //
+            cout<<"controlar generacion naipe"<<endl;
             generar_naipe(naipe,aleatorio1,palo);
+            cout<<"se genero naipe 1"<<endl;
             //controla que el naipe no exista
             //controlo con una cola auxiliar
+            cout<<"Ingresar al control de existe_naipe 1"<<endl;
             if(existe_naipe(aux,naipe)==false){
+                        cout<<"Ingreso correctamente al control de existe_naipe 1"<<endl;
+
                 //creo el nodo para agregar en el auxiliar
+                cout<<"crear nodo naipe 1"<<endl;
                 nodo_mazo(nuevo,naipe);
+                 cout<<"se creo nodo naipe 1"<<endl;
                 //agregoa a auxiliar
+                cout<<"agregar cola el nodo naipe 1"<<endl;
                 agregar_cola(aux,nuevo);
+                cout<<"se agrego el naipe 1 a la cola correctamente"<<endl;
                 fwrite(&naipe,sizeof(naipe),1,archivo);
                 i++;
             }
@@ -363,11 +383,14 @@ void cargar_cola(parchivo archivo,tcola &q){
 bool existe_naipe(tcola aux,tnaipe naipe){
     pmazo q;
     bool band=false;
+    //falto colocar el condicional que controle que la cola estaba vacia o no
+    if(!cola_vacia(aux)){
     do{
         q = quitar_cola(aux);
         if(com_naipe(q->naipe,naipe)==true)
             band=true;
     }while(cola_vacia(aux)!=true && band!=true);
+    }
     return band;
 }
 
