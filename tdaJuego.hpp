@@ -219,28 +219,28 @@ void comparar_mod(tlistadoble &lista_cartas,pmazo extraido,tnaipe &naipe,bool &b
     //recorro los naipes que tiene en su mano el jugador
     for(i=lista_cartas.inicio;i!=NULL;i=i->sig){
         cout<<"inicia el recorrido por las cartas"<<endl;
-        //si es comodin le gana a cualquier carta
-        if(i->dato.comodin==true){
-            cout<<"tiene carta comodin"<<endl;
-             //quito la carta de la mano del cliente
-            aux=quitar_nodo_cartas(lista_cartas,i->dato);
-            //asigno al naipe que se agregara a la pila
-            naipe=aux->dato;
-            //cambio la bandera que verifica si la carta del jugador le gano a la cima del mazo
-            band=true;
-        }else{//sino
             //comparo el valor de las cartas si una es mayor que la otra
            if(i->dato.valor >= extraido->naipe.valor){
                 aux=quitar_nodo_cartas(lista_cartas,i->dato);
                 naipe=aux->dato;
                 band=true;
            }else{
-                band=false;
+                //si es comodin le gana a cualquier carta
+                if(i->dato.comodin==true){
+                cout<<"tiene carta comodin"<<endl;
+                //quito la carta de la mano del cliente
+                aux=quitar_nodo_cartas(lista_cartas,i->dato);
+                //asigno al naipe que se agregara a la pila
+                naipe=aux->dato;
+                //cambio la bandera que verifica si la carta del jugador le gano a la cima del mazo
+                band=true;
+               } else
+                    band=false;
             }
 
         }
     }
-}
+
 
 
 bool comparar_naipe(tnaipe a,tnaipe b){

@@ -140,6 +140,7 @@ void generar_naipe(tnaipe &naipe,tlista &aleatorio,tlista &palo){
 }
 
 void generar_aleatorio(tlista &lis){
+    srand(time(NULL));
     iniciar_lista(lis);
 
     int aux=0,a;
@@ -153,6 +154,7 @@ void generar_aleatorio(tlista &lis){
 }
 
 void aleatoreo_palo(tlista &lis){
+    srand(time(NULL));
     iniciar_lista(lis);
     //indicadores de cantidad de cada elemento
     int a=0,b=0,c=0,d=0;

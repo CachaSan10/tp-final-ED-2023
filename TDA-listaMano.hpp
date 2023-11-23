@@ -91,31 +91,48 @@ void mostrar_lista_m(tlistadoble lis)
 }
 
 bool lista_mano_vacia(tlistadoble lis){
-    return lis.contador==0;
+    return lis.inicio=NULL;
 }
 plista_mano quitar_nodo_cartas(tlistadoble &lis,tnaipe naipe)
 { plista_mano i,extraido;
- if (lis.contador==0)
-    extraido=NULL;
+ if(lis.inicio==NULL)
+        extraido=NULL;
  else
- {  if(lis.final->dato.valor==i->dato.valor && strcmp(lis.final->dato.palo,naipe.palo)!=0){
-        extraido=lis.final;
-        lis.final=extraido->ant;
-        lis.final->sig=extraido->sig;
-        extraido->ant=NULL;
-        extraido->sig=NULL;
-        lis.contador--;
+ {  if(lis.inicio->dato.valor==naipe.valor&& strcmp(lis.inicio->dato.palo,naipe.palo)==0){
+        if(lis.inicio==lis.final){
+            extraido=lis.inicio;
+            lis.inicio=NULL;
+            lis.final=NULL;
+            lis.contador--;
+        }else{
+            extraido=lis.inicio;
+            lis.inicio=lis.inicio->sig;
+            lis.inicio->ant=NULL;
+            extraido->sig=NULL;
+            lis.contador--;
+        }
+    }else{
+        if(lis.final->dato.valor==naipe.valor&& strcmp(lis.final->dato.palo,naipe.palo)==0){
+            extraido=lis.final;
+            lis.final=lis.final->ant;
+            lis.final->sig=NULL;
+            extraido->ant=NULL;
+            lis.contador--;
+        }
+
+        for(i=lis.inicio;i!=lis.final && i->dato.valor!= naipe.valor && strcmp(i->dato.palo,naipe.palo)!=0 ;i=i->sig);
+        if(i!=lis.final){
+            extraido=i;
+            (i->ant)->sig=extraido->sig;
+            (i->sig)->ant=extraido->ant;
+            extraido->sig=NULL;
+            extraido->ant=NULL;
+            lis.contador--;
+        }
+
     }
 
-    for(i=lis.inicio;i!=lis.final && i->dato.valor!= naipe.valor && strcmp(i->dato.palo,naipe.palo)!=0 ;i=i->sig);
-    if(i!=lis.final){
-        extraido=i;
-        i->ant=extraido->sig;
-        (i->sig)->ant=extraido->ant;
-        extraido->sig=NULL;
-        extraido->ant=NULL;
-        lis.contador--;
-    }
+
  }
  return extraido;
 }
