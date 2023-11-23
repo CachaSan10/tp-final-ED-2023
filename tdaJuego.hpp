@@ -12,7 +12,9 @@ void menu_juego(int &op);
 void seleccion_jugador(tlistaJ &lista_jugadores);
 void repartir_cartas(tlistaJ &lis,tcola &mazo);
 void iniciar_juego(tlistaJ &lista_jugadores,tcola &mazo);
-void comparar_mod(tlistadoble &lista_cartas,pmazo extraido,tnaipe &naipe,bool band);
+void comparar_mod(tlistadoble &lista_cartas,pmazo extraido,tnaipe &naipe,bool &band);
+bool comparar_naipe(tnaipe a,tnaipe b);
+bool sin_cartas(tlistaJ lista_jugadores);
 
 void principal_juego(tcola &mazo){
 tlistaJ lista_jugadores;
@@ -138,7 +140,7 @@ void repartir_cartas(tlistaJ &lis,tcola &mazo){
             agregar_m(i->lista_cartas,extraido->naipe);
             cont++;
             if(cont==5){
-                count<<""<<endl;
+                cout<<""<<endl;
                 cout<<i->dato.nickname<<endl;//muestro el nombre del jugador
                 mostrar_lista_m(i->lista_cartas);//muestro las cartas que obtuvo en la reparticion de cartas
                 iniciar_pila(i->naipes_ganados);//iniciio la pila de naipes del jugador
@@ -154,12 +156,12 @@ void iniciar_juego(tlistaJ &lista_jugadores,tcola &mazo){
     pnodojugador i;
     pmazo extraido,aux;
     tnaipe naipe_ganador,naipe_reubicar;
-    bool=band;
+    bool band;
     i=lista_jugadores.inicio;
     int intentos=lista_jugadores.cant;//se utiliza esta variable para llevar un contador de las veces que se compara el mismo naipe
     do{
         band=false;
-        cout<<"** JUEGA: "<<i->dato.nickname<<" **"<<endl;
+        cout<<"* JUEGA: "<<i->dato.nickname<<" *"<<endl;
         cout<<"**************************"<<endl;
         cout<<"CIMA DE BARAJA"<<endl;
         extraido=frente_cola(mazo);//CONSULTA frente de cola
@@ -186,7 +188,7 @@ void iniciar_juego(tlistaJ &lista_jugadores,tcola &mazo){
                 intentos--;//decremento intentos
                 if(comparar_naipe(naipe_reubicar,extraido->naipe)==true && intentos==0){//si los intentos de comparar son o y el naipe es el mismo
                     extraido=quitar_cola(mazo);//extraigo el naipe
-                    agregar_cola(mazo,extraido->naipe);//lo reubico al final de la cola
+                    agregar_cola(mazo,extraido);//lo reubico al final de la cola
                 }
             }
 
@@ -203,20 +205,61 @@ void iniciar_juego(tlistaJ &lista_jugadores,tcola &mazo){
 
     }while(scartas!=true);//si scartas cambia a verdadero finaliza el juego
 
+    cout<<"se finalizaron los recorridos"<<endl;
+
 }
 
 /** Procedimiento que se encarga de comparar la lista de cartas que posee el jugador que le corresponde jugar
 con la cima del mazo de carta para saber si el jugador puede o no retirar  la carta de la cima para despues extraerlo
 y agregarlo a la pila de cartas que se va desaciendo el jugador.
 */
-void comparar_mod(tlistadoble &lista_cartas,pmazo extraido,tnaipe &naipe,bool band){
-    plista_mano i;
+void comparar_mod(tlistadoble &lista_cartas,pmazo extraido,tnaipe &naipe,bool &band){
+    plista_mano i,aux;
+
     //recorro los naipes que tiene en su mano el jugador
     for(i=lista_cartas.inicio;i!=NULL;i=i->sig){
+        cout<<"inicia el recorrido por las cartas"<<endl;
         //si es comodin le gana a cualquier carta
         if(i->dato.comodin==true){
-            naipe=i->dato;
+            cout<<"tiene carta comodin"<<endl;
+             //quito la carta de la mano del cliente
+            aux=quitar_nodo_cartas(lista_cartas,i->dato);
+            //asigno al naipe que se agregara a la pila
+            naipe=aux->dato;
+            //cambio la bandera que verifica si la carta del jugador le gano a la cima del mazo
+            band=true;
+        }else{//sino
+            //comparo el valor de las cartas si una es mayor que la otra
+           if(i->dato.valor >= extraido->naipe.valor){
+                aux=quitar_nodo_cartas(lista_cartas,i->dato);
+                naipe=aux->dato;
+                band=true;
+           }else{
+                band=false;
+            }
 
         }
     }
+}
+
+
+bool comparar_naipe(tnaipe a,tnaipe b){
+    if(a.valor==b.valor)
+        if(strcmp(a.palo,b.palo)==0)
+            return true;
+    return false;
+}
+
+bool sin_cartas(tlistaJ lista_jugadores){
+    pnodojugador i;
+    bool band=true;
+
+    for(i=lista_jugadores.inicio;i!=NULL && band!=false;i=i->sig){
+        if(lista_mano_vacia(i->lista_cartas)==true)
+            band=true;
+        else
+            band=false;
+    }
+    return band;
+
 }

@@ -9,7 +9,7 @@ esta libreria se utiliza para almacenar a los jugadores seleccionados
 typedef struct t_nodojugador *pnodojugador;
 typedef struct t_nodojugador{
     tjugador dato;
-    tpila naipes_ganados;//naipes que gana el jugador
+    ppila naipes_ganados;//naipes que gana el jugador
     tlistadoble lista_cartas;
     pnodojugador sig;
 };

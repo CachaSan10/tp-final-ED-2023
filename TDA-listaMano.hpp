@@ -20,9 +20,9 @@ int contador;
  void iniciar_lista_m(tlistadoble &lis);
  void crear_nodo(plista_mano &nuevo,tnaipe naipe);
  void agregar_m(tlistadoble &lis,tnaipe naipe);
- plista_mano quitar_nodo(tlistadoble &lis);
+
  void mostrar_lista_m(tlistadoble lis);
-plista_mano quitar(tlistadoble &lis,tnaipe naipe);
+plista_mano quitar_nodo_cartas(tlistadoble &lis,tnaipe naipe);
 bool lista_mano_vacia(tlistadoble lis);
 
  void iniciar_lista_m(tlistadoble &lis)
@@ -74,22 +74,7 @@ if (lis.contador==0)
 }
 }
 
-plista_mano quitar(tlistadoble &lis,tnaipe naipe)
-{ plista_mano i,extraido;
- if (lis.contador==0)
-    extraido=NULL;
- else
- {
-    for(i=lis.inicio;i!=lis.final && i->dato.valor!= naipe.valor;i=i->sig);
-    if(i!=lis.final){
-        extraido=i;
-        i->ant=extraido->sig;
-        (i->sig)->ant=extraido->ant;
-        extraido->sig=NULL;
-        extraido->ant=NULL;
-    }
- }
-}
+
 
 void mostrar_lista_m(tlistadoble lis)
 { plista_mano i;
@@ -107,4 +92,30 @@ void mostrar_lista_m(tlistadoble lis)
 
 bool lista_mano_vacia(tlistadoble lis){
     return lis.contador==0;
+}
+plista_mano quitar_nodo_cartas(tlistadoble &lis,tnaipe naipe)
+{ plista_mano i,extraido;
+ if (lis.contador==0)
+    extraido=NULL;
+ else
+ {  if(lis.final->dato.valor==i->dato.valor && strcmp(lis.final->dato.palo,naipe.palo)!=0){
+        extraido=lis.final;
+        lis.final=extraido->ant;
+        lis.final->sig=extraido->sig;
+        extraido->ant=NULL;
+        extraido->sig=NULL;
+        lis.contador--;
+    }
+
+    for(i=lis.inicio;i!=lis.final && i->dato.valor!= naipe.valor && strcmp(i->dato.palo,naipe.palo)!=0 ;i=i->sig);
+    if(i!=lis.final){
+        extraido=i;
+        i->ant=extraido->sig;
+        (i->sig)->ant=extraido->ant;
+        extraido->sig=NULL;
+        extraido->ant=NULL;
+        lis.contador--;
+    }
+ }
+ return extraido;
 }
