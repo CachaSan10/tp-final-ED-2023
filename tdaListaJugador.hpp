@@ -27,7 +27,7 @@ bool existe_valor(tlistaJ lis,tjugador valor);
 void mostrar_lis_jug(pnodojugador a);
 bool lista_vacia_j(tlistaJ lis);
 pnodojugador quitar_inicio(tlistaJ &lis);
-
+void mostrar_lis_jug_ganadores(pnodojugador a);
 
 // Inicia la lista de jugadores
 void iniciar_lista_jug(tlistaJ &lis){
@@ -79,10 +79,24 @@ void mostrar_lis_jug(pnodojugador a){
    pnodojugador i;
   if (a!=NULL)
   { for(i=a;i!=NULL;i=i->sig)
-        cout << "Nodo: " << i->dato.nickname << endl;
+        cout << "Jugadores: " << i->dato.nickname << endl;
   }else
     cout << "LISTA VACIA";
 }
+
+void mostrar_lis_jug_ganadores(pnodojugador a)
+{
+   pnodojugador i;
+  if (a!=NULL)
+  { cout<<"Jugadores Ganadores"<<endl;
+        for(i=a;i!=NULL;i=i->sig){
+        cout << "Jugadores: " << i->dato.nickname << endl;
+        cout<<"Puntaje: "<<i->dato.puntaje<<endl;
+        }
+  }else
+    cout << "LISTA VACIA";
+}
+
 bool lista_vacia_j(tlistaJ lis){
     return lis.inicio==NULL;
 }

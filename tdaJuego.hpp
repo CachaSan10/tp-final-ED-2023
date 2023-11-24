@@ -17,6 +17,9 @@ bool comparar_naipe(tnaipe a,tnaipe b);
 bool sin_cartas(tlistaJ lista_jugadores);
 void vaciar_mazo(tcola &q,pmazo &extraido,bool &mazo_creado);
 
+void actualizar_jugador_Ganador(tlistaJ &lis_j);
+void generar_lista_ganadores(tlistaJ &lis_ganadores,int puntajeMayor,tcad nickname);
+int total_puntaje(ppila &p);
 
 void principal_juego(tcola &mazo,bool &mazo_creado)
 {
@@ -64,6 +67,7 @@ void principal_juego(tcola &mazo,bool &mazo_creado)
                 iniciar_juego(lista_jugadores,mazo);
                 vaciar_mazo(mazo,extraido,mazo_creado);
                 cout<<"cola vacia"<<endl;
+                actualizar_jugador_Ganador(lista_jugadores);
             }
             else
                 cout<<"debe repartir las cartas"<<endl;
@@ -109,7 +113,7 @@ void seleccion_jugador(tlistaJ &lista_jugadores)
     mostrar_jugadores(jugadores);
     do
     {
-        cout<<"indique la cantidad de jugadores a seleccionar: "<<endl;
+        cout<<"\n Indique la cantidad de jugadores a seleccionar: "<<endl;
         cin>>cant;
     }
     while(cant==1);
@@ -266,13 +270,12 @@ void comparar_mod(tlistadoble &lista_cartas,pmazo extraido,tnaipe &naipe,bool &b
     //recorro los naipes que tiene en su mano el jugador
     for(i=lista_cartas.inicio; i!=NULL && band==false; i=i->sig)
     {
-        cout<<"inicia el recorrido por las cartas"<<endl;
+
         //comparo el valor de las cartas si una es mayor que la otra
         if(i->dato.valor>=extraido->naipe.valor)
         {
             carta_extraida=i->dato;
             band=true;
-            cout<<"Encontro la carta ganadora"<<endl;
         }
         else
         {
@@ -291,14 +294,12 @@ void comparar_mod(tlistadoble &lista_cartas,pmazo extraido,tnaipe &naipe,bool &b
         }
 
     }
-    cout<<"verifica la condicion"<<endl;
+
     if(band)
     {
-        cout<<"Ingreso a la condicion"<<endl;
         aux=quitar_nodo_cartas(lista_cartas,carta_extraida);
-        cout<<"extrae la carta"<<endl;
         naipe=aux->dato;
-        cout<<"se asigna la carta al naipe con exito"<<endl;
+
     }
 
 }
@@ -341,3 +342,67 @@ void vaciar_mazo(tcola &q,pmazo &extraido,bool &mazo_creado)
     }
     mazo_creado=false;
 }
+
+void actualizar_jugador_Ganador(tlistaJ &lis_j)
+{
+    pnodojugador extraido,i,j;
+    tlistaJ lis_ganadores;
+    parchivo_jugador jug;
+    iniciar_lista_jug(lis_ganadores);
+    int puntajeMayor=0;
+
+    for(i=lis_j.inicio; i!=NULL; i=i->sig)
+    {
+        i->dato.puntaje=total_puntaje(i->naipes_ganados);
+        if(puntajeMayor==0)
+        {
+            puntajeMayor=i->dato.puntaje;
+        }
+        else
+        {
+            if(puntajeMayor<i->dato.puntaje)
+                puntajeMayor=i->dato.puntaje;
+        }
+    }
+    cout<<"Puntaje ganador: "<<puntajeMayor<<endl;
+    i=lis_j.inicio;
+    while(i!=NULL)
+    {   cout<<"Puntaje de jugador "<<i->dato.puntaje<<endl;
+        if(i->dato.puntaje==puntajeMayor)
+        {
+            generar_lista_ganadores(lis_ganadores,puntajeMayor,i->dato.nickname);
+        }
+        i=i->sig;
+    }
+    mostrar_lis_jug_ganadores(lis_ganadores.inicio);
+    /**
+     i=lis_ganadores;
+    while(i!=NULL)
+    {
+       actualizar_puntaje_cant_ganados_jugador(jug,i->dato.nickname,i->dato.puntaje);
+        i=i->sig;
+    }
+    cout<<"Se actualizaron los puntajes con exito"<<endl;
+    **/
+    lis_j.inicio=NULL;
+    lis_ganadores.inicio=NULL;
+}
+
+int total_puntaje(ppila &p)
+{
+    int total=0;
+    while(!pila_vacia(p))
+    {
+        total=total+quitar_pila(p).punto;
+    }
+    return total;
+}
+
+void generar_lista_ganadores(tlistaJ &lis_ganadores,int puntajeMayor,tcad nickname)
+{tjugador jug;
+
+strcpy(jug.nickname,nickname);
+jug.puntaje=puntajeMayor;
+agregar_valor(lis_ganadores,jug);
+}
+

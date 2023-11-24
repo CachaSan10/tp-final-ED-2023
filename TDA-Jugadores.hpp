@@ -337,3 +337,31 @@ bool validar_nickname(tcad cadena)
     }
     return valido;
 }
+
+void actualizar_puntaje_cant_ganados_jugador(parchivo_jugador jugadores, tcad nickname,int puntaje)
+{
+    tjugador j;
+    bool band=false;
+    jugadores=fopen("archivo_binario/jugadores.txt","rb+");
+    if (jugadores==NULL)
+        cout << "Archivo Inexistente" << endl;
+    else
+    {
+        while (!feof(jugadores)&& band==false)
+        {
+            fread(&j,sizeof(j),1,jugadores);
+            if (strcmp(j.nickname,nickname)==0)
+                band=true;
+        }
+        if (band==true)
+        {
+            j.puntaje=puntaje;
+            j.cant_partida_ganadas++;
+            fseek(jugadores,-sizeof(j),1);
+            fwrite(&j,sizeof(j),1,jugadores);
+        }
+        else
+            cout << "REGISTRO NO ENCONTRADO" << endl;
+    }
+    fclose(jugadores);
+}
