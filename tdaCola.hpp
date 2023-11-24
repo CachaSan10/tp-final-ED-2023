@@ -1,10 +1,6 @@
 /**
 variante en la que se prioriza la velocidad
 */
-#include<iostream>
-#include<stdio.h>
-using namespace std;
-
 
 //#include "TDA-Jugadores.hpp"
 

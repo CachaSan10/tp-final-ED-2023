@@ -20,10 +20,13 @@ int contador;
  void iniciar_lista_m(tlistadoble &lis);
  void crear_nodo(plista_mano &nuevo,tnaipe naipe);
  void agregar_m(tlistadoble &lis,tnaipe naipe);
-
+void agregar_fin(tlistadoble &lis,tnaipe naipe);
  void mostrar_lista_m(tlistadoble lis);
 plista_mano quitar_nodo_cartas(tlistadoble &lis,tnaipe naipe);
 bool lista_mano_vacia(tlistadoble lis);
+plista_mano extraer_inicio(tlistadoble &lista);
+plista_mano extraer_fin(tlistadoble &lista);
+
 
  void iniciar_lista_m(tlistadoble &lis)
 {
@@ -136,4 +139,73 @@ plista_mano quitar_nodo_cartas(tlistadoble &lis,tnaipe naipe)
 
  }
  return extraido;
+}
+
+
+void agregar_fin(tlistadoble &lis,tnaipe naipe){
+plista_mano nuevo;
+
+crear_nodo_m(nuevo,naipe);
+
+     if(lis.inicio==NULL)
+    {
+        lis.inicio=nuevo;
+        lis.final=nuevo;
+    }
+    else
+    {
+        lis.final->sig=nuevo;
+        nuevo->ant=lis.final;
+        lis.final=nuevo;
+    }
+
+}
+
+plista_mano extraer_inicio(tlistadoble &lista){
+     plista_mano borrado;
+
+    if(lista.inicio==NULL)
+        borrado=NULL;
+    else
+    {
+        if(lista.inicio==lista.final)
+        {
+            borrado=lista.inicio;
+            lista.inicio=NULL;
+            lista.final=NULL;
+        }
+        else
+        {
+            borrado=lista.inicio;
+            lista.inicio=lista.inicio->sig;
+            lista.inicio->ant=NULL;
+            borrado->sig=NULL;
+        }
+    }
+    return borrado;
+}
+plista_mano extraer_fin(tlistadoble &lista){
+    plista_mano borrado;
+
+    if(lista.inicio==NULL)
+        borrado=NULL;
+    else
+    {
+        if(lista.inicio==lista.final)
+        {
+            borrado=lista.inicio;
+            lista.inicio=NULL;
+            lista.final=NULL;
+        }
+        else
+        {
+            borrado=lista.final;
+            lista.final=lista.final->ant;
+            lista.final->sig=NULL;
+            borrado->ant=NULL;
+
+        }
+    }
+    return borrado;
+
 }

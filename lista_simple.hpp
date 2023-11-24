@@ -22,7 +22,7 @@ bool existe_valor(pnodo lis,int valor);
 void mostrar(tlista lis);
 bool lista_vacia(tlista lis);
 pnodo quitar_inicio(tlista &lis);
-
+void agregar_fin_valor(tlista &lis,int a);
 
 
 void iniciar_lista(tlista &lis){
@@ -72,9 +72,23 @@ bool lista_vacia(tlista lis){
 
 pnodo quitar_inicio(tlista &lis){
     pnodo extraido;
-    extraido=lis.inicio;
-    lis.inicio=extraido->sig;
+    if(lis.inicio==NULL)
+        extraido=NULL;
+    else{
+        extraido=lis.inicio;
+        lis.inicio=extraido->sig;
+        extraido->sig=NULL;
+    }
     return extraido;
 }
 
-
+void agregar_fin_valor(tlista &lis,int a){
+    pnodo nuevo,i;
+    crear_nodo(nuevo,a);
+    if(lista_vacia(lis)==true)
+        lis.inicio=nuevo;
+    else{
+        for(i=lis.inicio;i->sig!=NULL;i=i->sig);
+        i->sig=nuevo;
+    }
+}

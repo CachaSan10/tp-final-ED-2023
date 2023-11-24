@@ -1,11 +1,12 @@
-#include <iostream>
-#include <stdio.h>
-#include <time.h>
-#include<stdlib.h>
-#include <string.h>
+//#include <iostream>
+//#include <stdio.h>
+
+//#include<stdlib.h>
+//#include <string.h>
 using namespace std;
-#include "tdaCola.hpp"
+//#include "tdaCola.hpp"
 #include "lista_simple.hpp"
+
 
 
 typedef FILE *parchivo;
@@ -15,7 +16,7 @@ void principal_baraja(int op,parchivo archivo,tcola &mazo,bool & mazo_creado);
 void crear_carta(pnodo nuevo,pmazo dato);
 void generar_aleatorio(tlista &lis);
 void iniciar_baraja(bool &band,parchivo archivo,tcola &mazo);
-void aleatoreo_palo(tlista &lis);
+void generar_palo(tlista &lis);
 int contar_elemento(tlista lis,int dato);
 void generar_mazo(tnaipe &naipe,parchivo archivo,tcola &mazo);
 void generar_naipe(tnaipe &naipe,tlista &aleatorio,tlista &palo);
@@ -29,6 +30,7 @@ void cargar_cola(parchivo archivo,tcola &q);
 bool existe_naipe(tcola aux,tnaipe naipe);
 bool com_naipe(tnaipe a,tnaipe b);
 
+//menu de opciones para generar la baraja
 void menu_gestion_baraja(int &op){
     cout<<"\n----Menu Principal----"<<endl;
     cout<<"1- Generar Baraja"<<endl;//iniciar
@@ -39,6 +41,9 @@ void menu_gestion_baraja(int &op){
     cin>>op;
 
 }
+
+
+//ejecuta las opciones precentadas en el menu
 void principal_baraja(int op,parchivo archivo,tcola &mazo,bool & mazo_creado){
 
     bool inicio_baraja;
@@ -96,95 +101,96 @@ void iniciar_baraja(bool &band,parchivo archivo,tcola &mazo){
 }
 
 void generar_mazo(tnaipe &naipe,parchivo archivo,tcola &mazo){
+    plista_mano extraido;
+    tlistadoble lista;
+    iniciar_lista_m(lista);
+    int a;
     int i=0;
-    pmazo nuevo; //es el nodo de almacenamiento
-    tcola aux;
+    //pmazo nuevo; //es el nodo de almacenamiento
+
     //falto inicializar la cola aux
-    iniciar_cola(aux);
+
    //tnaipe naipe;//es el registro con los datos del naipe
    archivo=fopen("BARAJA.SEC","wb+");
+   //listas de valores aleatorios del 1 al 12
    tlista aleatorio1,aleatorio2,aleatorio3,aleatorio4,palo;
-
-  // srand(time(NULL));
    //genera del 1 al 12 en forma aleatorea
    generar_aleatorio(aleatorio1);
-   mostrar(aleatorio1.inicio);
    generar_aleatorio(aleatorio2);
-   //
-  mostrar(aleatorio2.inicio);
    generar_aleatorio(aleatorio3);
-   //
-   mostrar(aleatorio3.inicio);
    generar_aleatorio(aleatorio4);
-
-   mostrar(aleatorio4.inicio);
-//   genero los aleatorios en los palos
-   //
-   aleatoreo_palo(palo);
-   //
+   generar_palo(palo);
     do{//verifica si esa lista no esta vacia
-    cout<<"controlar lista aleatorio 1"<<endl;
+        a=rand()%8;
         if(aleatorio1.inicio!=NULL){
-            //
-            cout<<"controlar generacion naipe"<<endl;
             generar_naipe(naipe,aleatorio1,palo);
-            cout<<"se genero naipe 1"<<endl;
-            //controla que el naipe no exista
-            //controlo con una cola auxiliar
-            cout<<"Ingresar al control de existe_naipe 1"<<endl;
-            if(existe_naipe(aux,naipe)==false){
-                        cout<<"Ingreso correctamente al control de existe_naipe 1"<<endl;
-
-                //creo el nodo para agregar en el auxiliar
-                cout<<"crear nodo naipe 1"<<endl;
-                nodo_mazo(nuevo,naipe);
-                 cout<<"se creo nodo naipe 1"<<endl;
-                //agregoa a auxiliar
-                cout<<"agregar cola el nodo naipe 1"<<endl;
-                agregar_cola(aux,nuevo);
-                cout<<"se agrego el naipe 1 a la cola correctamente"<<endl;
-                fwrite(&naipe,sizeof(naipe),1,archivo);
+            if(a==0||a==3||a==4||a==7){
+                agregar_m(lista,naipe);
+                i++;
+            }else{
+                agregar_fin(lista,naipe);
                 i++;
             }
         }else{
             if(aleatorio2.inicio!=NULL){
                 generar_naipe(naipe,aleatorio2,palo);
-                if(existe_naipe(aux,naipe)==false){
-                    nodo_mazo(nuevo,naipe);
-                    agregar_cola(aux,nuevo);
-                    fwrite(&naipe,sizeof(naipe),1,archivo);
+                if(a==1){
+                    agregar_m(lista,naipe);
+                    i++;
+                }else{
+                    agregar_fin(lista,naipe);
                     i++;
                 }
             }else{
                 if(aleatorio3.inicio!=NULL){
                     generar_naipe(naipe,aleatorio3,palo);
-                    if(existe_naipe(aux,naipe)==false){
-                        nodo_mazo(nuevo,naipe);
-                        agregar_cola(aux,nuevo);
-                        fwrite(&naipe,sizeof(naipe),1,archivo);
+                    if(a==0){
+                        agregar_m(lista,naipe);
+                        i++;
+                    }else{
+                        agregar_fin(lista,naipe);
                         i++;
                     }
                 }else{
                     if(aleatorio4.inicio!=NULL){
-                        generar_naipe(naipe,aleatorio4,palo);
-                        if(existe_naipe(aux,naipe)==false){
-                            nodo_mazo(nuevo,naipe);
-                            agregar_cola(aux,nuevo);
-                            fwrite(&naipe,sizeof(naipe),1,archivo);
-                            i++;
-                            }
+                    generar_naipe(naipe,aleatorio4,palo);
+                    if(a==1){
+                        agregar_m(lista,naipe);
+                        i++;
+                    }else{
+                        agregar_fin(lista,naipe);
+                        i++;
+                        }
                     }
                 }
+
             }
         }
+
     }while(i!=48);
+
+    do{
+
+        a=rand()%6;
+        if(lista.inicio!=NULL){
+            if(a==1||a==5){
+                extraido=extraer_inicio(lista);
+                naipe=extraido->dato;
+                fwrite(&naipe,sizeof(naipe),1,archivo);
+            }else{
+                extraido=extraer_fin(lista);
+                naipe=extraido->dato;
+                fwrite(&naipe,sizeof(naipe),1,archivo);
+                }
+        }
+    }while(lista_mano_vacia(lista)!=true);
      fclose(archivo);
     cargar_cola(archivo,mazo);
+    }
 
-}
 
 void generar_naipe(tnaipe &naipe,tlista &aleatorio,tlista &palo){
-    srand(time(NULL));
+
     pnodo auxAl, auxPal;
     auxAl=quitar_inicio(aleatorio);
     auxPal=quitar_inicio(palo);
@@ -195,7 +201,7 @@ void generar_naipe(tnaipe &naipe,tlista &aleatorio,tlista &palo){
 }
 
 void generar_aleatorio(tlista &lis){
-    srand(time(NULL));
+
     iniciar_lista(lis);
 
     int aux=0,a;
@@ -208,32 +214,33 @@ void generar_aleatorio(tlista &lis){
     }while(aux!=12);
 }
 
-void aleatoreo_palo(tlista &lis){
-   srand(time(NULL));
+void generar_palo(tlista &lis){
     iniciar_lista(lis);
-    //indicadores de cantidad de cada elemento
     int a=0,b=0,c=0,d=0;
+    //indicadores de cantidad de cada elemento
     int aux=0,x;
     do{
-        x=rand()%5;
-       if(x!=0){
-            if(x==1 && a<12){
-                agregar_valor(lis,x);
-                a++;
-                aux++;
+        if(a<12){
+            x=1;
+            agregar_valor(lis,x);
+            a++;
+            aux++;
 
-            }else{
-                if(x==2 && b<12){
+        }else{
+                if( b<12){
+                    x=2;
                     agregar_valor(lis,x);
                     b++;
                     aux++;
                } else{
-                    if(x==3 && c<12){
+                    if(c<12){
+                        x=3;
                         agregar_valor(lis,x);
                         c++;
                         aux++;
                     }else{
-                        if(x==4 && d<12){
+                        if( d<12){
+                            x=4;
                             agregar_valor(lis,x);
                             d++;
                             aux++;
@@ -243,7 +250,6 @@ void aleatoreo_palo(tlista &lis){
             }
 
 
-        }
 
     }while(aux!=48);
 
@@ -329,7 +335,10 @@ return dato==1||dato==2||dato==3;
 void nodo_mazo(pmazo &nuevo,tnaipe naipe){
     nuevo=new tmazo;
     if(nuevo!=NULL){
-        nuevo->naipe=naipe;
+        strcpy(nuevo->naipe.palo,naipe.palo);
+        nuevo->naipe.comodin=naipe.comodin;
+        nuevo->naipe.punto=naipe.punto;
+        nuevo->naipe.valor=naipe.valor;
         nuevo->sig=NULL;
     }
 }
@@ -351,12 +360,13 @@ void listar_mazo(parchivo archivo)
  archivo=fopen("BARAJA.SEC","rb");
  if(archivo==NULL)
  cout << "El archivo no existe" << endl;
- else
+ else{
  while(!feof(archivo))
  { fread(&p,sizeof(p),1,archivo); // Leer un registro
  if (!feof(archivo)){
     mostrar_naipe(p);
     }
+ }
  }
  fclose(archivo);
 }
@@ -384,19 +394,22 @@ bool existe_naipe(tcola aux,tnaipe naipe){
     pmazo q;
     bool band=false;
     //falto colocar el condicional que controle que la cola estaba vacia o no
-    if(!cola_vacia(aux)){
-    do{
-        q = quitar_cola(aux);
-        if(com_naipe(q->naipe,naipe)==true)
-            band=true;
-    }while(cola_vacia(aux)!=true && band!=true);
-    }
-    return band;
+    if(cola_vacia(aux)!=true){
+        do{
+            q = quitar_cola(aux);
+            if(com_naipe(q->naipe,naipe)==true)
+                band=true;
+        }while(cola_vacia(aux)!=true && band!=true);
+
+    }else
+        return band;
 }
 
 bool com_naipe(tnaipe a,tnaipe b){
     if(a.valor==b.valor)
-        if(strcmp(a.palo,b.palo)==0)
+     {
+         if(strcmp(a.palo,b.palo)==0)
             return true;
-    return false;
+     }else
+            return false;
 }

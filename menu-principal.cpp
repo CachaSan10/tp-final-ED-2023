@@ -2,18 +2,23 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-
+#include <time.h>
 using namespace std;
 typedef char tcad[30];
+#include "tdaCola.hpp"
+#include "TDA-listaMano.hpp"
 #include "TDA-Jugadores.hpp"
 #include "baraja.hpp"
+#include "TDA-pilaCartas.hpp"
+#include "tdaListaJugador.hpp"
 #include "tdaJuego.hpp"
+
 
 void menu(int&op);
 
 int main()
 {
-
+srand(time(NULL));
 //declaracion de variables para la gestion de la baraja
 parchivo archivo;
 tcola mazo;

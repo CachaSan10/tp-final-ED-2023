@@ -3,8 +3,8 @@ esta libreria se utiliza para almacenar a los jugadores seleccionados
 
 */
 //#include "TDA-Jugadores.hpp"
-#include "TDA-pilaCartas.hpp"
-#include "TDA-listaMano.hpp"
+//#include "TDA-pilaCartas.hpp"
+//#include "TDA-listaMano.hpp"
 
 typedef struct t_nodojugador *pnodojugador;
 typedef struct t_nodojugador{

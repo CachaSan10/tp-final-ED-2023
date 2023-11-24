@@ -5,7 +5,7 @@ using namespace std;
 
 //#include "baraja.hpp"
 //#include "TDA-Jugadores.hpp"
-#include "tdaListaJugador.hpp"
+
 
 void principal_juego(tcola &mazo);
 void menu_juego(int &op);
@@ -165,9 +165,12 @@ void iniciar_juego(tlistaJ &lista_jugadores,tcola &mazo){
         cout<<"****************"<<endl;
         cout<<"CIMA DE BARAJA"<<endl;
         extraido=frente_cola(mazo);//CONSULTA frente de cola
+        mostrar_naipe(extraido->naipe);
+        cout<<"****************"<<endl;
+        //se guarda el frente en un auxuliar para realizar el noeooooo
         aux=frente_cola(mazo);//CONSULTA frente de cola
         naipe_reubicar=aux->naipe;
-        mostrar_naipe(extraido->naipe);
+
         if(lista_mano_vacia(i->lista_cartas)!=true){//consulta si el jugador de turno tiene cartas para comparar
             cout<<"COMPARANDO CON MANO JUGADOR"<<endl;
             comparar_mod(i->lista_cartas,extraido,naipe_ganador,band);
@@ -244,10 +247,12 @@ void comparar_mod(tlistadoble &lista_cartas,pmazo extraido,tnaipe &naipe,bool &b
 
 
 bool comparar_naipe(tnaipe a,tnaipe b){
-    if(a.valor==b.valor)
+    if(a.valor==b.valor){
         if(strcmp(a.palo,b.palo)==0)
             return true;
-    return false;
+
+    }else
+        return false;
 }
 
 bool sin_cartas(tlistaJ lista_jugadores){
