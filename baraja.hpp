@@ -184,6 +184,7 @@ void generar_mazo(tnaipe &naipe,parchivo archivo,tcola &mazo){
                 }
         }
     }while(lista_mano_vacia(lista)!=true);
+
      fclose(archivo);
     cargar_cola(archivo,mazo);
     }
@@ -390,26 +391,3 @@ void cargar_cola(parchivo archivo,tcola &q){
 }
 
 
-bool existe_naipe(tcola aux,tnaipe naipe){
-    pmazo q;
-    bool band=false;
-    //falto colocar el condicional que controle que la cola estaba vacia o no
-    if(cola_vacia(aux)!=true){
-        do{
-            q = quitar_cola(aux);
-            if(com_naipe(q->naipe,naipe)==true)
-                band=true;
-        }while(cola_vacia(aux)!=true && band!=true);
-
-    }else
-        return band;
-}
-
-bool com_naipe(tnaipe a,tnaipe b){
-    if(a.valor==b.valor)
-     {
-         if(strcmp(a.palo,b.palo)==0)
-            return true;
-     }else
-            return false;
-}

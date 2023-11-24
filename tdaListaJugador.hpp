@@ -89,11 +89,22 @@ bool lista_vacia_j(tlistaJ lis){
 
 // Funcion que quita el jugador de la lista
 pnodojugador quitar_inicio(tlistaJ &lis){
-    pnodojugador extraido;
-    extraido=lis.inicio;
-    lis.inicio=extraido->sig;
-    lis.cant--;
-    return extraido;
+    pnodojugador aux;
+    if (lis.cant==0)
+        aux=NULL;
+  else
+    if (lis.cant==1)
+     { aux=lis.inicio;
+       lis.inicio=NULL;
+       lis.cant--;
+      }
+    else
+      { aux=lis.inicio;
+        lis.inicio=lis.inicio->sig;
+        aux->sig=NULL;
+        lis.cant--;
+      }
+  return aux;
 }
 
 

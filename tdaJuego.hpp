@@ -168,7 +168,7 @@ void iniciar_juego(tlistaJ &lista_jugadores,tcola &mazo){
         mostrar_naipe(extraido->naipe);
         cout<<"****************"<<endl;
         //se guarda el frente en un auxuliar para realizar el noeooooo
-        aux=frente_cola(mazo);//CONSULTA frente de cola
+       aux=frente_cola(mazo);//CONSULTA frente de cola
         naipe_reubicar=aux->naipe;
 
         if(lista_mano_vacia(i->lista_cartas)!=true){//consulta si el jugador de turno tiene cartas para comparar
@@ -223,7 +223,7 @@ void comparar_mod(tlistadoble &lista_cartas,pmazo extraido,tnaipe &naipe,bool &b
     for(i=lista_cartas.inicio;i!=NULL;i=i->sig){
         cout<<"inicia el recorrido por las cartas"<<endl;
             //comparo el valor de las cartas si una es mayor que la otra
-           if(i->dato.valor >= extraido->naipe.valor){
+           if(i->dato.valor>=extraido->naipe.valor){
                 aux=quitar_nodo_cartas(lista_cartas,i->dato);
                 naipe=aux->dato;
                 band=true;
