@@ -12,6 +12,7 @@ typedef char tcad[30];
 #include "TDA-pilaCartas.hpp"
 #include "tdaListaJugador.hpp"
 #include "tdaJuego.hpp"
+#include "arbol_ranking.hpp"
 
 
 void menu(int&op);
@@ -51,6 +52,7 @@ int opbaraja;
                     cout<<"debe iniciar el mazo"<<endl;
                 break;
         case 4:
+            mostrar_ranking();
             break;
         case 5:
             cout<<"Fin del Juego"<<endl;
