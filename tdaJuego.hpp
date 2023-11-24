@@ -14,12 +14,16 @@ void repartir_cartas(tlistaJ &lis,tcola &mazo);
 void iniciar_juego(tlistaJ &lista_jugadores,tcola &mazo);
 void comparar_mod(tlistadoble &lista_cartas,pmazo extraido,tnaipe &naipe,bool &band);
 bool comparar_naipe(tnaipe a,tnaipe b);
-bool sin_cartas(tlistaJ lista_jugadores);
+
+bool sin_cartas(tlistaJ lista_jugadores,int cant_jug);
 void vaciar_mazo(tcola &q,pmazo &extraido,bool &mazo_creado);
+int obtener_jugadores_disponible(tlistaJ jugadores);
+
 
 void actualizar_jugador_Ganador(tlistaJ &lis_j);
 void generar_lista_ganadores(tlistaJ &lis_ganadores,int puntajeMayor,tcad nickname);
 int total_puntaje(ppila &p);
+
 
 void principal_juego(tcola &mazo,bool &mazo_creado)
 {
@@ -207,7 +211,9 @@ void iniciar_juego(tlistaJ &lista_jugadores,tcola &mazo)
         naipe_reubicar=aux->naipe;
 
         if(lista_mano_vacia(i->lista_cartas)!=true) //consulta si el jugador de turno tiene cartas para comparar
-        {
+        {   if(intentos==0)
+               intentos=obtener_jugadores_disponible(lista_jugadores);
+
             cout<<"COMPARANDO CON MANO JUGADOR"<<endl;
             cout<<"Comparar las cartas"<<endl;
             comparar_mod(i->lista_cartas,extraido,naipe_ganador,band);
@@ -224,7 +230,7 @@ void iniciar_juego(tlistaJ &lista_jugadores,tcola &mazo)
                 mostrar_naipe(naipe_ganador);//muestro el naipe que le gano al frente del mazo
                 extraido=quitar_cola(mazo);//quito el frente del mazo
                 agregar_pila(i->naipes_ganados,extraido->naipe);//agrego el extraido a la pila del jugador
-                intentos=lista_jugadores.cant;//reinicio intentos
+               // intentos=obtener_jugadores_disponible(lista_jugadores);//reinicio intentos
             }
             else
             {
@@ -234,6 +240,7 @@ void iniciar_juego(tlistaJ &lista_jugadores,tcola &mazo)
                 {
                     extraido=quitar_cola(mazo);//extraigo el naipe
                     agregar_cola(mazo,extraido);//lo reubico al final de la cola
+                    cout<<"NINGUN JUGADOR PUDO EXTRAER LA CARTA, LA CIMA DEL MAZO PASA AL FINAL DEL MISMO"<<endl;
                 }
             }
 
@@ -247,8 +254,9 @@ void iniciar_juego(tlistaJ &lista_jugadores,tcola &mazo)
 
         if(i==NULL)//si llega al final de la lista de los jugadores reinicio los turnos
             i=lista_jugadores.inicio;
-        if(sin_cartas(lista_jugadores)==true)
-            scartas=true;
+
+            if(sin_cartas(lista_jugadores,lista_jugadores.cant)==true)
+                scartas=true;
 
     }
     while(scartas!=true); //si scartas cambia a verdadero finaliza el juego
@@ -257,6 +265,21 @@ void iniciar_juego(tlistaJ &lista_jugadores,tcola &mazo)
 
 
 }
+int obtener_jugadores_disponible(tlistaJ jugadores){
+     pnodojugador i;
+    int cantidad=0;
+
+    for(i=jugadores.inicio; i!=NULL ; i=i->sig)
+    {
+        if(i->lista_cartas.contador!=0)
+            cantidad++;
+    }
+
+    return cantidad;
+
+}
+
+
 
 /** Procedimiento que se encarga de comparar la lista de cartas que posee el jugador que le corresponde jugar
 con la cima del mazo de carta para saber si el jugador puede o no retirar  la carta de la cima para despues extraerlo
@@ -318,18 +341,22 @@ bool comparar_naipe(tnaipe a,tnaipe b)
         return false;
 }
 
-bool sin_cartas(tlistaJ lista_jugadores)
+
+
+bool sin_cartas(tlistaJ lista_jugadores,int cant_jugadores)
 {
     pnodojugador i;
-    bool band=true;
+    int cantidad=0;
+    bool band=false;
 
-    for(i=lista_jugadores.inicio; i!=NULL && band!=false; i=i->sig)
+    for(i=lista_jugadores.inicio; i!=NULL ; i=i->sig)
     {
-        if(lista_mano_vacia(i->lista_cartas)==true)
-            band=true;
-        else
-            band=false;
+        if(i->lista_cartas.contador==0)
+            cantidad++;
     }
+    if(cantidad==cant_jugadores)
+        band=true;
+
     return band;
 
 }
@@ -364,10 +391,10 @@ void actualizar_jugador_Ganador(tlistaJ &lis_j)
                 puntajeMayor=i->dato.puntaje;
         }
     }
-    cout<<"Puntaje ganador: "<<puntajeMayor<<endl;
+
     i=lis_j.inicio;
     while(i!=NULL)
-    {   cout<<"Puntaje de jugador "<<i->dato.puntaje<<endl;
+    {
         if(i->dato.puntaje==puntajeMayor)
         {
             generar_lista_ganadores(lis_ganadores,puntajeMayor,i->dato.nickname);
@@ -375,15 +402,15 @@ void actualizar_jugador_Ganador(tlistaJ &lis_j)
         i=i->sig;
     }
     mostrar_lis_jug_ganadores(lis_ganadores.inicio);
-    /**
-     i=lis_ganadores;
+
+     i=lis_ganadores.inicio;
     while(i!=NULL)
     {
        actualizar_puntaje_cant_ganados_jugador(jug,i->dato.nickname,i->dato.puntaje);
         i=i->sig;
     }
-    cout<<"Se actualizaron los puntajes con exito"<<endl;
-    **/
+    cout<<"Se actualizaron los puntajes de los ganadores con exito"<<endl;
+
     lis_j.inicio=NULL;
     lis_ganadores.inicio=NULL;
 }
