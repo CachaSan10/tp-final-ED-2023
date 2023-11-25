@@ -66,7 +66,7 @@ int opbaraja;
 
 void menu(int&op)
 {
-    cout<<"**EL CORAZON DE LA REINA**"<<endl;
+    cout<<"\n**EL CORAZON DE LA REINA**"<<endl;
     cout<<"\n----Menu Principal----"<<endl;
     cout<<"1- Gestion de Jugadores"<<endl;
     cout<<"2- Gestion de Barajas"<<endl;

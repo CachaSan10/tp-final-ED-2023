@@ -90,7 +90,7 @@ void mostrar_lis_jug_ganadores(pnodojugador a)
   if (a!=NULL)
   { cout<<"Jugadores Ganadores"<<endl;
         for(i=a;i!=NULL;i=i->sig){
-        cout << "Jugadores: " << i->dato.nickname << endl;
+        cout << "Jugador: " << i->dato.nickname << endl;
         cout<<"Puntaje: "<<i->dato.puntaje<<endl;
         }
   }else
