@@ -29,11 +29,13 @@ void menu_gestion_jugadores()
     tcad consulta,cadena;
     do
     {
+        //system("cls");
         menu_jugadores(op);
         switch(op)
         {
         case 1:
             agregar_jugador(jugadores);
+            //system("pause");
             break;
         case 2:
             fgets(cadena,30,stdin);
@@ -41,6 +43,7 @@ void menu_gestion_jugadores()
             cout<<"Ingrese Nickname de jugador a consultar: ";
             fgets(consulta,30,stdin);
             consultar_jugador(jugadores,consulta);
+            //system("pause");
             break;
         case 3:
             fgets(cadena,30,stdin);
@@ -48,16 +51,20 @@ void menu_gestion_jugadores()
             cout<<"Ingrese Nickname de jugador a consultar: ";
             fgets(consulta,30,stdin);
             modificar_jugador(jugadores,consulta);
+            //system("pause");
             break;
         case 4:
             mostrar_jugadores(jugadores);
+            //system("pause");
             break;
+
         case 5:
             fgets(cadena,30,stdin);
             strtok(cadena,"\n");
             cout<<"Ingrese Nickname de jugador a consultar: ";
             fgets(consulta,30,stdin);
             borrar_jugador( jugadores, consulta);
+            //system("pause");
             break;
         case 6:
             cout<<"Fin de gestion de jugadores"<<endl;

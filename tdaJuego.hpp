@@ -30,7 +30,7 @@ void principal_juego(tcola &mazo,bool &mazo_creado)
     int op;
     pmazo extraido;
     do
-    {
+    {   //system("cls");
         menu_juego(op);
         switch(op)
         {
@@ -40,6 +40,7 @@ void principal_juego(tcola &mazo,bool &mazo_creado)
             para luego almacenarlo en una lista.
             **/
             seleccion_jugador(lista_jugadores);//lista de jugadores elegidos ,archivo jugador
+          //  system("pause");
             break;
         case 2:
             /**
@@ -59,6 +60,7 @@ void principal_juego(tcola &mazo,bool &mazo_creado)
             }
             else
                 cout<<"debe seleccionar jugadores"<<endl;
+            //system("pause");
             break;
         case 3:
             if(ini_juego==true)
@@ -70,9 +72,11 @@ void principal_juego(tcola &mazo,bool &mazo_creado)
             }
             else
                 cout<<"debe repartir las cartas"<<endl;
+            //system("pause");
             break;
         case 4:
             cout<<"Fin del menu de Juego"<<endl;
+            //system("pause");
             break;
         default:
             cout<<"Error de opcion"<<endl;
@@ -97,7 +101,7 @@ void menu_juego(int &op)
 
 void seleccion_jugador(tlistaJ &lista_jugadores)
 {
-
+    //DECLARACION DE VARIABLES
     //archivo donde se almacenan los jugadores
     parchivo_jugador jugadores;
     //objeto auxiliar de tipo jugador
@@ -109,7 +113,10 @@ void seleccion_jugador(tlistaJ &lista_jugadores)
     //variable que indica la cantidad de jugadores a seleccionar
     int cant;
     //realizo la apertura del archivo
+    //FIN DE VARIABLES
+
     mostrar_jugadores(jugadores);
+    //REPITE EL BUCLE SI SE SOLICITA SELECCIONAR 1 JUGADOR
     do
     {
         cout<<"\nIndique la cantidad de jugadores a seleccionar: "<<endl;
@@ -154,12 +161,13 @@ void seleccion_jugador(tlistaJ &lista_jugadores)
 
 //Procedimiento que se encarga de repartir las cartas a los jugadores
 void repartir_cartas(tlistaJ &lis,tcola &mazo)
-{
+{   //DECLARACION DE VARIABLES
     pmazo extraido;
     int aux,cont;
     pnodojugador i;
     i=lis.inicio;
     aux=lis.cant;//cantidad de cartas que se asigna por jugador
+    //FIN DE VARIABLES
     cout<<"PARTICIPANTES DE PARTIDA: "<<aux<<endl;
     for(aux; aux>0; aux--)
     {
@@ -182,7 +190,9 @@ void repartir_cartas(tlistaJ &lis,tcola &mazo)
     }
 
 }
-
+/**
+    EL MODULO SE ENCARGA DE EJECUTAR ACCIONES DETALLADAS PARA EL JUEGO
+*/
 void iniciar_juego(tlistaJ &lista_jugadores,tcola &mazo)
 {
     bool scartas=false;
@@ -194,8 +204,11 @@ void iniciar_juego(tlistaJ &lista_jugadores,tcola &mazo)
     int intentos=lista_jugadores.cant;//se utiliza esta variable para llevar un contador de las veces que se compara el mismo naipe
     do
     {
+    //    system("cls");
         band=false;
-        cout<<"* JUEGA: "<<i->dato.nickname<<" *"<<endl;
+        cout<<"** JUEGO **"<<endl;
+        cout<<"****************"<<endl;
+        cout<<"*JUEGA: "<<i->dato.nickname<<"*"<<endl;
         cout<<"****************"<<endl;
         cout<<"CIMA DE BARAJA"<<endl;
         extraido=frente_cola(mazo);//CONSULTA frente de cola
@@ -236,11 +249,12 @@ void iniciar_juego(tlistaJ &lista_jugadores,tcola &mazo)
                     cout<<"NINGUN JUGADOR PUDO EXTRAER LA CARTA, LA CIMA DEL MAZO PASA AL FINAL DEL MISMO"<<endl;
                 }
             }
+      //      system("pause");
 
         }
         else
         {
-            cout<<"ya no tiene cartas en su mano"<<endl;
+            cout<<"EL JUGADOR YA NO TIENE CARTAS EN SU MANO"<<endl;
         }
 
         i=i->sig;//le paso el turno al siguiente jugador
@@ -255,7 +269,7 @@ void iniciar_juego(tlistaJ &lista_jugadores,tcola &mazo)
     while(scartas!=true); //si scartas cambia a verdadero finaliza el juego
 
     cout<<"se finalizaron los recorridos"<<endl;
-
+   // system("pause");
 
 }
 int obtener_jugadores_disponible(tlistaJ jugadores){

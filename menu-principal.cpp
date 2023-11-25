@@ -29,25 +29,30 @@ int opbaraja;
     int op;
     do
     {
+        //system("cls");
         menu(op);
         switch(op)
         {
         case 1:
                 menu_gestion_jugadores();
+          //      system("pause");
             break;
         case 2:
                 principal_baraja(opbaraja,archivo,mazo,mazo_creado);
-
+          //      system("pause");
 
             break;
        case 3:
                 if(mazo_creado==true){
                     principal_juego(mazo,mazo_creado);
+            //        system("pause");
                 }else
                     cout<<"debe iniciar el mazo"<<endl;
+            //        system("pause");
                 break;
         case 4:
             mostrar_ranking();
+         //   system("pause");
             break;
         case 5:
             cout<<"Fin del Juego"<<endl;
@@ -61,6 +66,7 @@ int opbaraja;
 
 void menu(int&op)
 {
+    cout<<"**EL CORAZON DE LA REINA**"<<endl;
     cout<<"\n----Menu Principal----"<<endl;
     cout<<"1- Gestion de Jugadores"<<endl;
     cout<<"2- Gestion de Barajas"<<endl;
