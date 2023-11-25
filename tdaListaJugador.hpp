@@ -79,7 +79,7 @@ void mostrar_lis_jug(pnodojugador a){
    pnodojugador i;
   if (a!=NULL)
   { for(i=a;i!=NULL;i=i->sig)
-        cout << "Jugadores: " << i->dato.nickname << endl;
+        cout << "Jugador: " << i->dato.nickname << endl;
   }else
     cout << "LISTA VACIA";
 }
