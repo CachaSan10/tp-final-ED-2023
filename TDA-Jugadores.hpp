@@ -355,7 +355,7 @@ void actualizar_puntaje_cant_ganados_jugador(parchivo_jugador jugadores, tcad ni
         }
         if (band==true)
         {
-            j.puntaje=puntaje;
+            j.puntaje+=puntaje;
             j.cant_partida_ganadas++;
             fseek(jugadores,-sizeof(j),1);
             fwrite(&j,sizeof(j),1,jugadores);

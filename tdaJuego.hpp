@@ -2,11 +2,6 @@
 #include<stdio.h>
 using namespace std;
 
-
-//#include "baraja.hpp"
-//#include "TDA-Jugadores.hpp"
-
-
 void principal_juego(tcola &mazo,bool &mazo_creado);
 void menu_juego(int &op);
 void seleccion_jugador(tlistaJ &lista_jugadores);
@@ -117,7 +112,7 @@ void seleccion_jugador(tlistaJ &lista_jugadores)
     mostrar_jugadores(jugadores);
     do
     {
-        cout<<"\n Indique la cantidad de jugadores a seleccionar: "<<endl;
+        cout<<"\nIndique la cantidad de jugadores a seleccionar: "<<endl;
         cin>>cant;
     }
     while(cant==1);
@@ -125,7 +120,7 @@ void seleccion_jugador(tlistaJ &lista_jugadores)
     for(int i=cant; i>0; i--)
     {
         existe=false;
-        //apertuda del archivo para solo lectura
+        //apertura del archivo para solo lectura
         jugadores=fopen("archivo_binario/jugadores.txt","rb");
         fgets(cadena,30,stdin);
         strtok(cadena,"\n");
@@ -215,9 +210,7 @@ void iniciar_juego(tlistaJ &lista_jugadores,tcola &mazo)
                intentos=obtener_jugadores_disponible(lista_jugadores);
 
             cout<<"COMPARANDO CON MANO JUGADOR"<<endl;
-            cout<<"Comparar las cartas"<<endl;
             comparar_mod(i->lista_cartas,extraido,naipe_ganador,band);
-            cout<<"Comparar cartas con exito"<<endl;
             if(band==true) //si canbia band indica que en la mano tengo una carta que le gana  a la cima del mazo
             {
                 cout<<"EL JUGADOR OBTIENE LA CARTA"<<endl;
@@ -230,7 +223,7 @@ void iniciar_juego(tlistaJ &lista_jugadores,tcola &mazo)
                 mostrar_naipe(naipe_ganador);//muestro el naipe que le gano al frente del mazo
                 extraido=quitar_cola(mazo);//quito el frente del mazo
                 agregar_pila(i->naipes_ganados,extraido->naipe);//agrego el extraido a la pila del jugador
-               // intentos=obtener_jugadores_disponible(lista_jugadores);//reinicio intentos
+
             }
             else
             {
@@ -306,10 +299,6 @@ void comparar_mod(tlistadoble &lista_cartas,pmazo extraido,tnaipe &naipe,bool &b
             if(i->dato.comodin==true)
             {
                 cout<<"tiene carta comodin"<<endl;
-                //quito la carta de la mano del cliente
-                //aux=quitar_nodo_cartas(lista_cartas,i->dato);
-                //asigno al naipe que se agregara a la pila
-                //naipe=aux->dato;
                 carta_extraida=i->dato;
                 //cambio la bandera que verifica si la carta del jugador le gano a la cima del mazo
                 band=true;

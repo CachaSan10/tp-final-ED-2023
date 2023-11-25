@@ -4,7 +4,7 @@
 //#include<stdlib.h>
 //#include <string.h>
 using namespace std;
-//#include "tdaCola.hpp"
+
 #include "lista_simple.hpp"
 
 
@@ -91,7 +91,7 @@ void principal_baraja(int op,parchivo archivo,tcola &mazo,bool & mazo_creado){
 }
 void iniciar_baraja(bool &band,parchivo archivo,tcola &mazo){
     //archivo
-    archivo=fopen("BARAJA.SEC","wb+");
+    archivo=fopen("archivo_binario/BARAJA.SEC","wb+");
     iniciar_cola(mazo);
     if(archivo!=NULL && mazo.frente==NULL){
         band=true;
@@ -111,7 +111,7 @@ void generar_mazo(tnaipe &naipe,parchivo archivo,tcola &mazo){
     //falto inicializar la cola aux
 
    //tnaipe naipe;//es el registro con los datos del naipe
-   archivo=fopen("BARAJA.SEC","wb+");
+   archivo=fopen("archivo_binario/BARAJA.SEC","wb+");
    //listas de valores aleatorios del 1 al 12
    tlista aleatorio1,aleatorio2,aleatorio3,aleatorio4,palo;
    //genera del 1 al 12 en forma aleatorea
@@ -358,7 +358,7 @@ void mostrar_naipe(tnaipe nodo){
 void listar_mazo(parchivo archivo)
 { tnaipe p;
   pmazo nuevo;
- archivo=fopen("BARAJA.SEC","rb");
+ archivo=fopen("archivo_binario/BARAJA.SEC","rb");
  if(archivo==NULL)
  cout << "El archivo no existe" << endl;
  else{
@@ -375,7 +375,7 @@ void listar_mazo(parchivo archivo)
 void cargar_cola(parchivo archivo,tcola &q){
   tnaipe p;
   pmazo nuevo;
- archivo=fopen("BARAJA.SEC","rb");
+ archivo=fopen("archivo_binario/BARAJA.SEC","rb");
  if(archivo==NULL)
  cout << "El archivo no existe" << endl;
  else{
